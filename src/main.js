@@ -2,19 +2,25 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// import 'normalize.css'
+import 'weui/dist/style/weui.min.css'
 
 import App from './App'
 import Home from './components/Home'
 import ShoppingBag from './components/ShoppingBag'
+import PresellRule from './components/PresellRule'
 
 Vue.use(VueRouter)
 
 const routes = [{
   path : '/',
   component : Home
-},{
+}, {
   path : '/shopping-bag',
   component : ShoppingBag
+}, {
+  path : '/presell-rule',
+  component : PresellRule
 }];
 
 const router = new VueRouter({

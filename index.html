@@ -2,7 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <title>presell</title>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded',function(){
+     // refreshRem();
+     var docEl = window.document.documentElement;
+     var width = docEl.getBoundingClientRect().width;
+     var rootSize = width/720*100;
+     docEl.style.fontSize = rootSize + 'px';
+      },false);
+    </script>
   </head>
   <body>
     <div id="app"></div>
