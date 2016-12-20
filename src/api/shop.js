@@ -39,6 +39,12 @@ export default {
 			cb: cb
 		})
 	},
+	getIntroduction (cb) {
+		ajax({
+			url: '/api/publisher/324234242423',
+			cb: cb
+		})
+	},
 	getNumberInfo (cb) {
 		ajax({
 			url: '/api/number_info',

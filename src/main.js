@@ -9,6 +9,7 @@ import App from './App'
 import Home from './components/Home'
 import ShoppingBag from './components/ShoppingBag'
 import PresellRule from './components/PresellRule'
+import Introduction from './components/Introduction'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,9 @@ const routes = [{
 }, {
   path : '/presell-rule',
   component : PresellRule
+}, {
+  path : '/introduction',
+  component : Introduction
 }];
 
 const router = new VueRouter({
