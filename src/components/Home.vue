@@ -1,4 +1,5 @@
 <template>
+<div>
 	<div class="main-body">
 		<div class="productTitle">
 		    <h1 class="title">{{res.title}}</h1>
@@ -81,15 +82,33 @@
 		    </div>
 		</div>
 
+
 		<router-link to="/shopping-bag">购物袋</router-link>
 	</div>
-
+	<div class="footer button_active">
+		<div class="haha">
+			<div class="tip">5</div>
+		</div>
+		<div class="buttonArea">
+	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail add_to_cart">加入购物袋</a>
+	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order">立即购买</a>
+      </div>
+	</div>
+</div>
 </template>
 
 <script>
 import shop from '../api/shop'
+import Flexbox from 'vux-components/flexbox/flexbox'
+import FlexboxItem from 'vux-components/flexbox/flexbox-item'
+import XButton from 'vux-components/x-button'
 
 export default {
+	components: {
+		Flexbox,
+		FlexboxItem,
+		XButton
+	},
 	data: function() {
 		return {
 			res: {}

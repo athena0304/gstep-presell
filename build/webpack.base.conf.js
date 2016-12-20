@@ -27,7 +27,8 @@ module.exports = {
       'src': path.resolve(__dirname, '../src'),
       'assets': path.resolve(__dirname, '../src/assets'),
       'static': path.resolve(__dirname, '../src/static'),
-      'components': path.resolve(__dirname, '../src/components')
+      'components': path.resolve(__dirname, '../src/components'),
+      'vux-components': 'vux/src/components/'
     }
   },
   resolveLoader: {
@@ -64,6 +65,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /vux.src.*?js$/,
+        loader: 'babel'
       }
     ]
   },
