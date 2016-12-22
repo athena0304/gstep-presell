@@ -81,37 +81,52 @@
 		        <div class="splitbar">商品信息</div>
 		    </div>
 		</div>
-
-
-		<router-link to="/shopping-bag">购物袋</router-link>
 	</div>
 	<div class="footer button_active">
-		<div class="haha">
-			<div class="tip">5</div>
-		</div>
+		<router-link to="/shopping-bag">
+			<div class="haha">
+				<div class="tip">5</div>
+			</div>
+		</router-link>
 		<div class="buttonArea">
 	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail add_to_cart">加入购物袋</a>
-	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order">立即购买</a>
+	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order" v-on:click="showActionSheet">立即购买</a>
       </div>
 	</div>
+<!-- 	<div id="actionSheet_wrap">
+		<div class="weui-mask_transparent actionsheet__mask" id="mask"></div> -->
+		<div class="weui-actionsheet" v-bind:class="{'weui-actionsheet_toggle':isShow}" id="iosActionsheet">
+	        <purchase-panel v-bind:purchaseDetail = "purchaseDetail"></purchase-panel>
+	    </div>
+<!-- 	</div> -->
 </div>
 </template>
 
 <script>
 import shop from '../api/shop'
-import Flexbox from 'vux-components/flexbox/flexbox'
-import FlexboxItem from 'vux-components/flexbox/flexbox-item'
-import XButton from 'vux-components/x-button'
+import PurchasePanel from './PurchasePanel'
 
 export default {
-	components: {
-		Flexbox,
-		FlexboxItem,
-		XButton
-	},
-	data: function() {
+	data () {
 		return {
-			res: {}
+			res: {},
+			isShow: false,
+			purchaseDetail:{}
+		}
+	},
+	components: {
+		PurchasePanel
+	},
+	methods: {
+		showActionSheet: function (event) {
+			var _self = this;
+			shop.getPurchaseDetail(function(data) {
+				console.log(data.res)
+				_self.purchaseDetail = data.res
+				_self.isShow = true;
+
+			})
+			
 		}
 	},
 	created () {
@@ -121,7 +136,8 @@ export default {
 			_self.res = data.res
 
 		})
-	}
+	},
+	
 }
 
 </script>

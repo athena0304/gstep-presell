@@ -45,6 +45,12 @@ export default {
 			cb: cb
 		})
 	},
+	getPurchaseDetail (cb) {
+		ajax({
+			url: '/api/purchase/detail/324234242423',
+			cb: cb
+		})
+	},
 	getNumberInfo (cb) {
 		ajax({
 			url: '/api/number_info',
