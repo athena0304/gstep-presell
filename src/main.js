@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 // import 'normalize.css'
 import 'weui/dist/style/weui.min.css'
 import 'vux/dist/vux.css'
+import 'font-awesome/css/font-awesome.css'
 
 import App from './App'
 import Home from './components/Home'

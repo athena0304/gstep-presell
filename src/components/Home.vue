@@ -95,9 +95,9 @@
 	</div>
 <!-- 	<div id="actionSheet_wrap">
 		<div class="weui-mask_transparent actionsheet__mask" id="mask"></div> -->
-		<div class="weui-actionsheet" v-bind:class="{'weui-actionsheet_toggle':isShow}" id="iosActionsheet">
-	        <purchase-panel v-bind:purchaseDetail = "purchaseDetail"></purchase-panel>
-	    </div>
+
+	    <purchase-panel v-bind:purchaseDetail = "purchaseDetail" v-bind:isShow = "isShow"></purchase-panel>
+
 <!-- 	</div> -->
 </div>
 </template>
@@ -121,8 +121,14 @@ export default {
 		showActionSheet: function (event) {
 			var _self = this;
 			shop.getPurchaseDetail(function(data) {
-				console.log(data.res)
-				_self.purchaseDetail = data.res
+				// console.log(data.res)
+				var aaa = data.res;
+				aaa.properties.forEach(function(item, index, array) {
+			      item.current = index;
+			    })
+				_self.purchaseDetail = aaa;
+
+			    console.log(_self.purchaseDetail)
 				_self.isShow = true;
 
 			})
