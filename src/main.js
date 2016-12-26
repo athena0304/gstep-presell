@@ -8,6 +8,7 @@ import 'vux/dist/vux.css'
 import 'font-awesome/css/font-awesome.css'
 
 import App from './App'
+import store from './store'
 import Home from './components/Home'
 import ShoppingBag from './components/ShoppingBag'
 import PresellRule from './components/PresellRule'
@@ -23,10 +24,13 @@ const routes = [{
   component : ShoppingBag
 }, {
   path : '/presell-rule',
-  component : PresellRule
+  // 懒加载
+  component : resolve => require(['./components/PresellRule.vue'],resolve),
+  // component : PresellRule
 }, {
   path : '/introduction',
-  component : Introduction
+  component : resolve => require(['./components/Introduction.vue'],resolve),
+  // component : Introduction
 }];
 
 const router = new VueRouter({
@@ -38,6 +42,7 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
