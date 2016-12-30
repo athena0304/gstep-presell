@@ -29,6 +29,10 @@ module.exports = {
         '/image': {
             target: 'http://45.62.108.67',
             changeOrigin: true
+        },
+        '/dongzhe': {
+            target: 'http://45.62.108.67',
+            changeOrigin: true
         }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

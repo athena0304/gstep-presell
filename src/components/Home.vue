@@ -89,16 +89,11 @@
 			</div>
 		</router-link>
 		<div class="buttonArea">
-	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail add_to_cart">加入购物袋</a>
-	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order" v-on:click="showActionSheet">立即购买</a>
+	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail add_to_cart" @click="showActionSheet('addCart')">加入购物袋</a>
+	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order" @click="showActionSheet('purchase')">立即购买</a>
       </div>
 	</div>
-<!-- 	<div id="actionSheet_wrap">
-		<div class="weui-mask_transparent actionsheet__mask" id="mask"></div> -->
-
-	    <purchase-panel v-bind:purchaseDetail = "purchaseDetail" v-bind:isShow = "isShow"></purchase-panel>
-
-<!-- 	</div> -->
+	    <purchase-panel v-bind:purchaseDetail = "purchaseDetail" v-bind:isShow = "isShow" v-bind:comfirmType = "comfirmType"></purchase-panel>
 </div>
 </template>
 
@@ -111,21 +106,23 @@ export default {
 		return {
 			res: {},
 			isShow: false,
-			purchaseDetail:{}
+			purchaseDetail:{},
+			comfirmType: ''
 		}
 	},
 	components: {
 		PurchasePanel
 	},
 	methods: {
-		showActionSheet: function (event) {
+		showActionSheet: function (type, event) {
 			var _self = this;
+			this.comfirmType = type;
 			shop.getPurchaseDetail(function(data) {
 				// console.log(data.res)
 				var aaa = data.res;
-				aaa.properties.forEach(function(item, index, array) {
-			      item.current = index;
-			    })
+				// aaa.properties.forEach(function(item, index, array) {
+			 //      item.current = index;
+			 //    })
 				_self.purchaseDetail = aaa;
 
 			    console.log(_self.purchaseDetail)

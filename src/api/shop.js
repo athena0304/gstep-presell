@@ -47,8 +47,15 @@ export default {
 	},
 	getPurchaseDetail (cb) {
 		ajax({
-			url: '/api/purchase/detail/324234242423',
+			url: '/dongzhe/purchase/detail',
 			cb: cb
+		})
+	},
+	getPrice (params, cb) {
+		ajax({
+			url: '/dongzhe/get_price',
+			cb: cb,
+			params
 		})
 	},
 	getNumberInfo (cb) {

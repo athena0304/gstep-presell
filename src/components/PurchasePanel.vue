@@ -13,7 +13,7 @@
             {{purchaseDetail.name}}
           </p>
           <p class="">
-            <span>￥{{purchaseDetail.price}}</span>
+            <span>￥{{aaa}}</span>
           </p>
         </div>
         <div class="close" v-on:click = "isShow = false">
@@ -27,7 +27,7 @@
         {{property.name}}
       </div>
       <div class="choose_items">
-        <div class="choose_item" v-for="(item, index) in property.type" v-bind:class="{'choose':property.current == index}" v-on:click="property.current = index" >{{item}}</div>
+        <div class="choose_item" v-for="(item, index) in property.type_cn" v-bind:class="{'choose':property.current == index}" v-on:click="property.current = index" >{{item}}</div>
       </div>
     </div>
 
@@ -39,17 +39,17 @@
       </div>
       <div class="choose_items">
         <div class="operation minus">
-          -
+          <i class='fa fa-minus' @click="changeSpinner('minus')"></i>
         </div>
         <div class="number_show">
           {{purchaseDetail.unit}}
         </div>
         <div class="operation add">
-          +
+          <i class='fa fa-plus' @click="changeSpinner('plus')"></i>
         </div>
       </div>
     </div>
-    <a class="order-footer order-detail-footer">
+    <a class="order-footer order-detail-footer" @click="panelConfirm">
       确定
     </a>
   </div>
@@ -58,22 +58,56 @@
 
 <script>
 import '../less/detail.less'
+import shop from '../api/shop'
+
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  props: ['purchaseDetail','isShow'],
+  props: ['purchaseDetail','isShow', 'comfirmType'],
   data () {
-    return {}
-
+    return {
+        aaa: 0
+    }
   },
-  // methods: {
-  //   changeItem: function(index, property, event) {
+  watch: {
+      'purchaseDetail.unit' (val) {
+            this.$store.dispatch('changeCount', val)
+      }
+  },
+  computed: mapGetters ({
+    'aaa': 'price'
+  }),
+  methods: {
+    // ...mapActions(['changeCount']),
+    changeSpinner(type) {
+        switch (type) {
+            case 'plus':
+                this.purchaseDetail.unit++
+                break
+            case 'minus':
+                this.purchaseDetail.unit--
+                break
+        }
+    },
+    panelConfirm() {
+        var _self = this;
+        switch (type) {
+            case 'addCart':
 
-  //     // property.current = index;
-  //     // this.purchaseDetail.properties[itemIndex].current = 2;
-  //     // console.log(this.purchaseDetail.properties[itemIndex].current)
-  //     // console.log("index: " + index)
-  //   }
-  // }
+                shop.getPrice(params, function(data) {
+                    console.log(data.res)
+                    // _self.res = data.res
+
+                })
+
+            case 'purchase':
+                console.log(this.comfirmType)
+                break
+
+        }
+    }
+  }
+
 }
 </script>
 
