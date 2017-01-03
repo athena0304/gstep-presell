@@ -27,7 +27,7 @@
         {{property.name}}
       </div>
       <div class="choose_items">
-        <div class="choose_item" v-for="(item, index) in property.type_cn" v-bind:class="{'choose':property.current == index}" v-on:click="property.current = index" >{{item}}</div>
+        <div class="choose_item" v-for="(item, index) in property.type_cn" v-bind:class="{'choose':property.current == index}" v-on:click="changeItem(itemIndex, index)" >{{item}}</div>
       </div>
     </div>
 
@@ -63,7 +63,7 @@ import shop from '../api/shop'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  props: ['purchaseDetail','isShow', 'comfirmType'],
+  props: ['isShow', 'comfirmType'],
   data () {
     return {
         aaa: 0
@@ -74,11 +74,18 @@ export default {
             this.$store.dispatch('changeCount', val)
       }
   },
-  computed: mapGetters ({
-    'aaa': 'price'
-  }),
+  computed: {
+    ...mapGetters ({
+        'aaa': 'price',
+        purchaseDetail: 'initData'
+    }),
+  },
   methods: {
-    // ...mapActions(['changeCount']),
+    changeItem(itemIndex, index) {
+        // console.log(index)
+        this.$store.dispatch('changeItem', {itemIndex,index})
+        // this.$store.dispatch('changeItem', itemIndex, index)
+    },
     changeSpinner(type) {
         switch (type) {
             case 'plus':
@@ -88,8 +95,9 @@ export default {
                 this.purchaseDetail.unit--
                 break
         }
+        // this.$store.dispatch('initData', {"aaa": "sdsdsd"})
     },
-    panelConfirm() {
+    panelConfirm(type) {
         var _self = this;
         switch (type) {
             case 'addCart':
@@ -97,7 +105,6 @@ export default {
                 shop.getPrice(params, function(data) {
                     console.log(data.res)
                     // _self.res = data.res
-
                 })
 
             case 'purchase':
