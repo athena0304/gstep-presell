@@ -6,7 +6,7 @@ import {getPrice} from '../actions'
 // initial state
 const state = {
 	product: {
-		count: 0,
+		count: 1,
 		price: 0, 
 	},
 	initData: []

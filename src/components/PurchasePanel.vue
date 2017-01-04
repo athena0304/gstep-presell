@@ -1,7 +1,7 @@
 <template>
 <div>
 
-  <div class="weui-mask_transparent actionsheet__mask" id="mask" v-show="isShow" v-on:click = "isShow = false"></div>
+  <div class="weui-mask_transparent actionsheet__mask" id="mask" v-show="isShow" v-on:click = "closePanel"></div>
   <div class="weui-actionsheet purchase-panel-wrapper" v-bind:class="{'weui-actionsheet_toggle':isShow}">
     <div class="order">
       <div class="order-inner vertical-middle">
@@ -16,7 +16,7 @@
             <span>￥{{aaa}}</span>
           </p>
         </div>
-        <div class="close" v-on:click = "isShow = false">
+        <div class="close" v-on:click = "closePanel">
           <i class='fa fa-times-circle'></i>
         </div>
       </div>
@@ -82,6 +82,9 @@ export default {
     }),
   },
   methods: {
+    closePanel () {
+        this.$emit('closePanel')
+    },
     changeItem(itemIndex, index) {
         // console.log(index)
         this.$store.dispatch('changeItem', {itemIndex,index})

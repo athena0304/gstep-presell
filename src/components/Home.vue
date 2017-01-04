@@ -93,7 +93,7 @@
 	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order" @click="showActionSheet('purchase')">立即购买</a>
       </div>
 	</div>
-	    <purchase-panel  v-bind:isShow = "isShow" v-bind:comfirmType = "comfirmType"></purchase-panel>
+	    <purchase-panel  v-bind:isShow = "isShow" v-on:closePanel="closePanel" v-bind:comfirmType = "comfirmType"></purchase-panel>
 </div>
 </template>
 
@@ -114,6 +114,9 @@ export default {
 		PurchasePanel
 	},
 	methods: {
+		closePanel: function() {
+			this.isShow = false;
+		},
 		showActionSheet: function (type, event) {
 			var _self = this;
 			this.comfirmType = type;
