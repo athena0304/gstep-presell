@@ -40,6 +40,7 @@ const mutations = {
 	},
 	[types.INIT_DATA](state, data) {
 		state.initData = data;
+		state.product.price = data.price;
 	},
 	[types.CHANGE_ITEM](state, data) {
 		// console.log(index)
