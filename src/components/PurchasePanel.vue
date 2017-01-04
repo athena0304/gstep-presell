@@ -42,7 +42,7 @@
           <i class='fa fa-minus' @click="changeSpinner('minus')"></i>
         </div>
         <div class="number_show">
-          {{purchaseDetail.unit}}
+          {{num}}
         </div>
         <div class="operation add">
           <i class='fa fa-plus' @click="changeSpinner('plus')"></i>
@@ -66,18 +66,19 @@ export default {
   props: ['isShow', 'comfirmType'],
   data () {
     return {
-        aaa: 0
+        aaa: 0,
+        num: 1
     }
   },
   watch: {
-      'purchaseDetail.unit' (val) {
+      'num' (val) {
             this.$store.dispatch('changeCount', val)
       }
   },
   computed: {
     ...mapGetters ({
         'aaa': 'price',
-        purchaseDetail: 'initData'
+        purchaseDetail: 'initData',
     }),
   },
   methods: {
@@ -89,24 +90,20 @@ export default {
     changeSpinner(type) {
         switch (type) {
             case 'plus':
-                this.purchaseDetail.unit++
+                this.num++
                 break
             case 'minus':
-                this.purchaseDetail.unit--
+                this.num--
                 break
         }
-        // this.$store.dispatch('initData', {"aaa": "sdsdsd"})
     },
     panelConfirm(type) {
         var _self = this;
         switch (type) {
             case 'addCart':
-
                 shop.getPrice(params, function(data) {
                     console.log(data.res)
-                    // _self.res = data.res
                 })
-
             case 'purchase':
                 console.log(this.comfirmType)
                 break

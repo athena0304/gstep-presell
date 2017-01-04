@@ -1,6 +1,8 @@
 import shop from '../../api/shop'
 import * as types from '../mutation-types'
 
+import {getPrice} from '../actions'
+
 // initial state
 const state = {
 	product: {
@@ -21,9 +23,9 @@ const actions = {
 	initData ({ commit, state }, data) {
 		commit(types.INIT_DATA, data)
 	},
-	changeItem ({ commit, state }, data) {
-		console.log(data)
+	changeItem ({ commit, state , rootState}, data) {
 		commit(types.CHANGE_ITEM, data)
+		getPrice({ commit, rootState })
 	}
 
 }

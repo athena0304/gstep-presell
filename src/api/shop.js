@@ -35,7 +35,11 @@ export default {
 	},
 	getHomeData (cb) {
 		ajax({
-			url: '/api/commodity/324234242423',
+			url: '/api/commodity/index',
+			method: 'post',
+			params: {
+				commodity_id: 1
+			},
 			cb: cb
 		})
 	},
