@@ -121,27 +121,19 @@ export default {
 			var _self = this;
 			this.comfirmType = type;
 			shop.getPurchaseDetail(function(data) {
-				// console.log(data.res)
-				var aaa = data.res;
-				// aaa.properties.forEach(function(item, index, array) {
-			 //      item.current = index;
-			 //    })
-				_self.purchaseDetail = aaa;
+				_self.purchaseDetail = data.res;
 
-			    // console.log(_self.purchaseDetail)
-
-			    // this.$store.dispatch('initData', _self.purchaseDetail)
 				_self.isShow = true;
 				_self.$store.dispatch('initData', _self.purchaseDetail)
-
 			})
 			
 		}
 	},
 	created () {
 		var _self = this;
+		console.log("asdasda")
 		shop.getHomeData(function(data) {
-			// console.log(data.res)
+			console.log(data)
 			_self.res = data.res
 
 		})

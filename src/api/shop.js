@@ -1,9 +1,11 @@
 var axios = require('axios')
 
+const COMMODITY_ID = 1
+
 function ajax({
 	url,
 	params = {},
-	method = "get",
+	method = "post",
 	cb = function() {},
 	cbError = function() {}
 }) {
@@ -38,7 +40,7 @@ export default {
 			url: '/api/commodity/index',
 			method: 'post',
 			params: {
-				commodity_id: 1
+				commodity_id: COMMODITY_ID
 			},
 			cb: cb
 		})
@@ -46,12 +48,18 @@ export default {
 	getIntroduction (cb) {
 		ajax({
 			url: '/api/publisher/324234242423',
+			params: {
+				commodity_id: COMMODITY_ID
+			},
 			cb: cb
 		})
 	},
 	getPurchaseDetail (cb) {
 		ajax({
-			url: '/dongzhe/purchase/detail',
+			url: '/api/commodity/attribute',
+			params: {
+				commodity_id: COMMODITY_ID
+			},
 			cb: cb
 		})
 	},

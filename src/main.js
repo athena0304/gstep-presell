@@ -31,6 +31,10 @@ const routes = [{
   path : '/introduction',
   component : resolve => require(['./components/Introduction.vue'],resolve),
   // component : Introduction
+},{
+  path : '/confirm-order',
+  name: 'ConfirmOrder',
+  component : resolve => require(['./components/ConfirmOrder.vue'],resolve),
 }];
 
 const router = new VueRouter({

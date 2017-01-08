@@ -23,7 +23,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/api': {
-            target: 'http://test.preseller.gsteps.cn/',
+            target: 'http://preseller.gsteps.cn/',
             changeOrigin: true
         },
         '/image': {

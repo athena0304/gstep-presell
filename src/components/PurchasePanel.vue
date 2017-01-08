@@ -10,7 +10,7 @@
         </div>
         <div class="order-detail">
           <p>
-            {{purchaseDetail.name}}
+            {{purchaseDetail.title}}
           </p>
           <p class="">
             <span>￥{{aaa}}</span>
@@ -22,12 +22,12 @@
       </div>
     </div>
 
-    <div class="choose_type choose_property" v-for="(property, itemIndex) in purchaseDetail.properties">
+    <div class="choose_type choose_property" v-for="(property, itemIndex) in purchaseDetail.attributes">
       <div class="choose_title">
-        {{property.name}}
+        {{property.cn_attr_name}}
       </div>
-      <div class="choose_items">
-        <div class="choose_item" v-for="(item, index) in property.type_cn" v-bind:class="{'choose':property.current == index}" v-on:click="changeItem(itemIndex, index)" >{{item}}</div>
+      <div class="choose_items" >
+        <div class="choose_item" v-for="(item, index) in property.options" v-bind:class="{'choose':item.default}" v-on:click="changeItem(itemIndex, index)" >{{item.cn_option_name}}</div>
       </div>
     </div>
 
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <a class="order-footer order-detail-footer" @click="panelConfirm">
+    <a class="order-footer order-detail-footer" @click="panelConfirm()">
       确定
     </a>
   </div>
@@ -100,15 +100,18 @@ export default {
                 break
         }
     },
-    panelConfirm(type) {
+    panelConfirm() {
         var _self = this;
+        var type = this.comfirmType
         switch (type) {
             case 'addCart':
-                shop.getPrice(params, function(data) {
-                    console.log(data.res)
-                })
+            this.closePanel();
+            // console.log(type)
+                // shop.getPrice(params, function(data) {
+                //     console.log(data.res)
+                // })
             case 'purchase':
-                console.log(this.comfirmType)
+                this.$router.push({ name: 'ConfirmOrder'})
                 break
 
         }
