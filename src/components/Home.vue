@@ -42,7 +42,7 @@
 		            <div class="progress-text">{{res.sold_count}} / 100
 		            </div>
 		        </div>
-		    </div>
+		    </div> 
 		</div>
 
 		<router-link to="/introduction">
@@ -89,8 +89,8 @@
 			</div>
 		</router-link>
 		<div class="buttonArea">
-	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail add_to_cart" @click="showActionSheet('addCart')">加入购物袋</a>
-	        <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary show_detail purchase_to_order" @click="showActionSheet('purchase')">立即购买</a>
+	        <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary show_detail add_to_cart" @click="showActionSheet('addCart')">加入购物袋</a>
+	        <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary show_detail purchase_to_order" @click="showActionSheet('purchase')">立即购买</a>
       </div>
 	</div>
 	    <purchase-panel  v-bind:isShow = "isShow" v-on:closePanel="closePanel" v-bind:comfirmType = "comfirmType"></purchase-panel>
