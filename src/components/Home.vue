@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class='main'>
 	<div class="main-body">
 		<div class="productTitle">
 		    <h1 class="title">{{res.title}}</h1>
