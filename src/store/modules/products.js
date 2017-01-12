@@ -25,7 +25,7 @@ const actions = {
 	},
 	changeItem ({ commit, state , rootState}, data) {
 		commit(types.CHANGE_ITEM, data)
-		getPrice({ commit, rootState })
+		// getPrice({ commit, rootState })
 	}
 
 }
@@ -43,8 +43,11 @@ const mutations = {
 		state.product.price = data.price;
 	},
 	[types.CHANGE_ITEM](state, data) {
-		// console.log(index)
-		state.initData.properties[data.itemIndex].current = data.index
+		var options = state.initData.attributes[data.itemIndex].options;
+		options.forEach(function(item,index,array) {
+			item.default = false;
+		})
+		options[data.index].default = true;
 	}
 }
 

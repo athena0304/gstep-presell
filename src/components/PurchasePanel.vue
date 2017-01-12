@@ -86,6 +86,7 @@ export default {
         this.$emit('closePanel')
     },
     changeItem(itemIndex, index) {
+        // console.log(itemIndex)
         // console.log(index)
         this.$store.dispatch('changeItem', {itemIndex,index})
         // this.$store.dispatch('changeItem', itemIndex, index)

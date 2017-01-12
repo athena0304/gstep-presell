@@ -5,7 +5,7 @@ export const changeCount = ({ commit, state, rootState }, val) => {
 
 	commit(types.CHANGE_COUNT, val)
 
-	getPrice({ commit, state, rootState })
+	// getPrice({ commit, state, rootState })
 	
 }
 
