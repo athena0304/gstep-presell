@@ -88,5 +88,19 @@ export default {
 			// simulate random checkout failure.
 			(Math.random() > 0.5 || navigator.userAgent.indexOf('PhantomJS') > -1) ? cb() : errorCb()
 		}, 100)
+	},
+	makeOrder ({ params, cb }) {
+		ajax({
+			method: 'get',
+			url: '/dongzhe/make_order',
+			params,
+			cb
+		})
+	},
+	getAddress (cb) {
+		ajax({
+			url: '/api/address/all',
+			cb
+		})
 	}
 }
