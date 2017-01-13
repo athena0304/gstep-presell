@@ -106,14 +106,15 @@ export default {
         var type = this.comfirmType
         switch (type) {
             case 'addCart':
-            this.closePanel();
-            // console.log(type)
+                this.closePanel();
+                this.$router.push({ name: 'ShoppingBag'})
+                break;
                 // shop.getPrice(params, function(data) {
                 //     console.log(data.res)
                 // })
             case 'purchase':
                 this.$router.push({ name: 'ConfirmOrder'})
-                break
+                break;
 
         }
     }

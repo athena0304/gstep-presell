@@ -21,7 +21,9 @@ const routes = [{
   component : Home
 }, {
   path : '/shopping-bag',
-  component : ShoppingBag
+  name: 'ShoppingBag',
+  component : resolve => require(['./components/ShoppingBag.vue'],resolve),
+  // component : ShoppingBag
 }, {
   path : '/presell-rule',
   // 懒加载
