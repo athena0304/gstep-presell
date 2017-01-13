@@ -16,6 +16,9 @@ export default {
 
 		}
 	},
+	created() {
+		console.log("shoppingbag")
+	},
 	components: {
 		HeadBar
 	}

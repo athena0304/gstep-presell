@@ -71,6 +71,19 @@ export default {
 			params
 		})
 	},
+	addToCart (params, cb) {
+		ajax({
+			url: '/api/cart/add',
+			cb: cb,
+			params
+		})
+	},
+	getCartList (cb) {
+		ajax({
+			url: '/api/cart/get',
+			cb: cb
+		})
+	},
 	getNumberInfo (cb) {
 		ajax({
 			url: '/api/number_info',

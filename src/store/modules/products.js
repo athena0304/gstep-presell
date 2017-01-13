@@ -9,12 +9,15 @@ const state = {
 		count: 1,
 		price: 0, 
 	},
-	initData: []
+	initData: [],
+	selected_option_ids: []
 }
 
 const getters = {
 	price: state => state.product.price,
-	initData: state => state.initData
+	initData: state => state.initData,
+	selected_option_ids: state => state.selected_option_ids,
+	count: state => state.product.count,
 }
 
 
@@ -41,6 +44,9 @@ const mutations = {
 	[types.INIT_DATA](state, data) {
 		state.initData = data;
 		state.product.price = data.price;
+		var attributes = state.initData.attributes;
+		state.selected_option_ids = initSelectOption(attributes);
+		
 	},
 	[types.CHANGE_ITEM](state, data) {
 		var options = state.initData.attributes[data.itemIndex].options;
@@ -48,7 +54,22 @@ const mutations = {
 			item.default = false;
 		})
 		options[data.index].default = true;
+
+		var attributes = state.initData.attributes;
+		istate.selected_option_ids = initSelectOption(attributes);
 	}
+}
+
+let initSelectOption = (attributes) => {
+	var selected_option = [];
+	attributes.forEach(function(item, index, array) {
+		var slectItem = item.options.filter(function(item, index, array) {
+			return (item.default)
+		})
+		var selectIndex = slectItem[0].option_id;
+		selected_option.push(selectIndex)
+	})
+	return selected_option
 }
 
 export default {
