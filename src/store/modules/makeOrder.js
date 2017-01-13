@@ -16,6 +16,9 @@ const mutations = {
 		state.makeSure = status
 	}
 }
+const getters = {
+	makeSure: state => state.makeSure
+}
 const actions = {
 	makeOrder ({ commit, state, rootState }, params) {
 		let { ids, router } = params
@@ -29,10 +32,16 @@ const actions = {
 				router.push('/shopping-bag')
 			}
 		})
+	},
+	changeMakeStatus ({ commit, state }, params) {
+		let { status } = params
+		console.log(params)
+		commit(types.CHANGE_MAKE_STATUS, status)
 	}
 }
 export default {
 	state,
 	mutations,
-	actions
+	actions,
+	getters
 }

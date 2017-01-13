@@ -8,12 +8,20 @@ const state = {
 const getters = {
 	addressList: state => state.addressList,
 	defaultAddress: state => state.defaultAddress,
-	chooseAddr: state => state.chooseAddr
+	chooseAddr: state => state.chooseAddress
 }
 const actions = {
-	getAddress ({ commit, state }) {
+	getAddress ({ commit, state }, address) {
 		shop.getAddress(address => {
-			dispatch(types.GET_ADDRESS, address)
+			commit(types.GET_ADDRESS, address)
+		})
+	},
+	chooseDefultAction ({ commit, state }, params) {
+		shop.chooseDefultAddress({
+			params,
+			cb: data => {
+				data.msg === 'success' && actions.getAddress({ commit, state })
+			}
 		})
 	}
 }

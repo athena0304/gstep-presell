@@ -13,9 +13,11 @@ import Home from './components/Home'
 import ShoppingBag from './components/ShoppingBag'
 import PresellRule from './components/PresellRule'
 import Introduction from './components/Introduction'
+import addressList from './components/addressList'
 
 Vue.use(VueRouter)
-
+import { city } from './filter/city'
+Vue.filter('city', city)
 const routes = [{
   path : '/',
   component : Home
@@ -35,6 +37,10 @@ const routes = [{
   path : '/confirm-order',
   name: 'ConfirmOrder',
   component : resolve => require(['./components/ConfirmOrder.vue'],resolve),
+},{
+  path: '/address-list',
+  name: 'addressList',
+  component: resolve => require(['./components/addressList.vue'],resolve),
 }];
 
 const router = new VueRouter({

@@ -103,5 +103,12 @@ export default {
 			url: '/api/address/all',
 			cb
 		})
+	},
+	chooseDefultAddress ({ params, cb }) {
+		ajax({
+			url: '/api/address/default',
+			params,
+			cb
+		})
 	}
 }

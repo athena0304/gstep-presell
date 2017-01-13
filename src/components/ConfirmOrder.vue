@@ -10,12 +10,19 @@
 			    <div class="order addresses" style="">
 			      <div class="order-inner vertical-middle">
 			        <div class="order-detail">
-			          <p>
-			            <span class="name">范晓宇</span><span class="phone">13552266949</span>
-			          </p>
-			          <p class="detail">
-			            中国 北京市 朝阳区 酒仙桥6号院电子国际总
-			          </p>
+			        	<div @click='addAddress' class='addressArea'>
+			        		<div v-if="CchooseAddr">
+			        			<p>
+			        				<span class="name">{{CchooseAddr.name}}</span><span class="phone">{{CchooseAddr.phone}}</span>
+			        			</p>
+			          		<p class="detail">
+			        			<span>{{CchooseAddr.province|city}} {{CchooseAddr.municipality|city}} {{CchooseAddr.region|city}} {{CchooseAddr.address}}</span>
+			        			</p>
+			        		</div>
+			        		<div v-else>
+			        				去添加地址
+			        		</div>
+			        	</div>
 			        </div>
 			        <div class="price vertical-middle">
 			          <img src="~static/img/arrow.png" alt="" style="width:0.2rem">
@@ -119,6 +126,9 @@
 	.main {
 		top: 0.96rem;
 	}
+	.addressArea {
+		display: block;
+	}
 </style>
 <script>
 import HeadBar from './HeadBar'
@@ -150,9 +160,13 @@ export default {
 		}
 	},
 	computed: {
-		// CchooseAddr () {
-		// 	return this.chooseAddr || this.defaultAddress
-		// },
+		...mapGetters ({
+        chooseAddr: 'chooseAddr',
+        defaultAddress: 'defaultAddress'
+    }),
+		CchooseAddr () {
+			return this.chooseAddr || this.defaultAddress
+		}
 		// total () {
 		// 	return this.makeOrderList.reduce(generate(this.add), 0)
 		// },
@@ -162,13 +176,13 @@ export default {
 	},
 	methods: {
 
-		// addAddress () {
-		// 	this.address = true
-		// 	if (this.CchooseAddr) {
-		// 		return this.$router.push({
-		// 			name: 'addressList'
-		// 		})
-		// 	}
+		addAddress () {
+			this.address = true
+			if (this.CchooseAddr) {
+				return this.$router.push({
+					name: 'addressList'
+				})
+			}
 		// 	this.$router.push({
 		// 		name: 'address',
 		// 		params: {
@@ -180,7 +194,7 @@ export default {
 		// 			}
 		// 		}
 		// 	})
-		// },
+		},
 		makePurchase () {
 			this.$store.dispatch('makeOrder', {
 				// ids: this.ids,
@@ -201,21 +215,21 @@ export default {
 		// }
 	},
 	beforeRouteLeave (to, from, next) {
-		// if (this.address) {
+		if (this.address) {
 			next()
-		// 	this.address = false
-		// 	return
-		// }
-		// this.isShow = true
-		// if (this.makeSure) {
-		// 	next()
-		// 	return
-		// }
-		// next(false)
+			this.address = false
+			return
+		}
+		this.isShow = true
+		if (this.$store.getters.makeSure) {
+			next()
+			return
+		}
+		next(false)
 	},
 	mounted () {
-		// this.changeMakeStatus(false)
-		// this.isShow = false
+		this.$store.dispatch('changeMakeStatus', { status: false })
+		this.isShow = false
 	},
 	created () {
 		this.$store.dispatch('getAddress')
