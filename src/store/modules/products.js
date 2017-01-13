@@ -56,7 +56,7 @@ const mutations = {
 		options[data.index].default = true;
 
 		var attributes = state.initData.attributes;
-		istate.selected_option_ids = initSelectOption(attributes);
+		state.selected_option_ids = initSelectOption(attributes);
 	}
 }
 
