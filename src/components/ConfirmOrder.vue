@@ -111,7 +111,7 @@
 </div>
 </template>
 <style src="../less/purchase.less"></style>
-<style lang='less'>
+<style lang='less' scoped>
 	.order-detail-footer {
 		position: absolute;
 		bottom: 0;
@@ -202,7 +202,7 @@ export default {
 	},
 	beforeRouteLeave (to, from, next) {
 		// if (this.address) {
-		// 	next()
+			next()
 		// 	this.address = false
 		// 	return
 		// }
