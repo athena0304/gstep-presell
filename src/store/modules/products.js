@@ -25,7 +25,7 @@ const actions = {
 	},
 	changeItem ({ commit, state , rootState}, data) {
 		commit(types.CHANGE_ITEM, data)
-		// getPrice({ commit, rootState })
+		getPrice({ commit, rootState })
 	}
 
 }

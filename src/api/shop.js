@@ -31,6 +31,7 @@ function ajax({
 }
 
 export default {
+	COMMODITY_ID: COMMODITY_ID, 
 	ajax,
 	getProducts (cb) {
 		setTimeout(() => cb(_products), 100)
@@ -65,7 +66,7 @@ export default {
 	},
 	getPrice (params, cb) {
 		ajax({
-			url: '/dongzhe/get_price',
+			url: '/api/commodity/attribute',
 			cb: cb,
 			params
 		})
