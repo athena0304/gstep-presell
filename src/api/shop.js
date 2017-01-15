@@ -123,5 +123,26 @@ export default {
 			params,
 			cb
 		})
+	},
+	deleteAddress ({ params, cb }) {
+		ajax({
+			url: '/api/address/delete',
+			params,
+			cb
+		})
+	},
+	addAddress ({ params, cb }) {
+		ajax({
+			url: '/api/address/add',
+			params,
+			cb
+		})
+	},
+	editAddress ({ params, cb }) {
+		ajax({
+			url: '/api/address/modify',
+			params,
+			cb
+		})
 	}
 }
