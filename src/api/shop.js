@@ -33,6 +33,7 @@ function ajax({
 export default {
 	COMMODITY_ID: COMMODITY_ID, 
 	ajax,
+	/***************首页**************/
 	getProducts (cb) {
 		setTimeout(() => cb(_products), 100)
 	},
@@ -55,6 +56,7 @@ export default {
 			cb: cb
 		})
 	},
+	/***************购买面板**************/
 	getPurchaseDetail (cb) {
 		ajax({
 			url: '/api/commodity/attribute',
@@ -78,6 +80,7 @@ export default {
 			params
 		})
 	},
+	/***************购物车页面**************/
 	getCartList (cb) {
 		ajax({
 			url: '/api/cart/get',
@@ -103,6 +106,7 @@ export default {
 			(Math.random() > 0.5 || navigator.userAgent.indexOf('PhantomJS') > -1) ? cb() : errorCb()
 		}, 100)
 	},
+	/***************确认订单页面**************/
 	makeOrder ({ params, cb }) {
 		ajax({
 			method: 'get',
