@@ -7,10 +7,10 @@
 		<div class='address'>
 			<div class="main make_order">
 			  <div class="">
-			    <div class="order addresses" style="">
+			    <div class="order addresses" style="" @click='addAddress'>
 			      <div class="order-inner vertical-middle">
 			        <div class="order-detail">
-			        	<div @click='addAddress' class='addressArea'>
+			        	<div class='addressArea'>
 			        		<div v-if="CchooseAddr">
 			        			<p>
 			        				<span class="name">{{CchooseAddr.name}}</span><span class="phone">{{CchooseAddr.phone}}</span>

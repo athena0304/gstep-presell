@@ -6,11 +6,8 @@
 		<div class="addressList">
 			<div class="main addresses">
 			  <div class="main-body">
-					<div class="order addresses address" v-for='(item, index) in addressList'>
-						<!-- <div class="checkbox checksimple choose_checkobx">
-						  <img src="" alt="">
-						</div> -->
-					  <div class="order-inner vertical-middle" @click='choose(item)'>
+					<div class="order addresses address" v-for='(item, index) in addressList' @click='choose(item)'>
+					  <div class="order-inner vertical-middle">
 					  	<label @click="chooseDefult(item)"><span v-if="item.default" class="choose circle"></span><span v-else class="circle unchoose"></span>默认地址</label>
 					    <div class="order-detail address-detail">
 					      <p>
@@ -21,8 +18,8 @@
 					      </p>
 					    </div>
 					    <div class="price vertical-middle">
-					    	<i class='fa fa-edit'></i>
-					    	<i class='fa fa-times-circle'></i>
+					    	<i class='fa fa-edit' @click="editAddress(item)"></i>
+					    	<i class='fa fa-times-circle' @click="showDialog($event, item)"></i>
 					    </div>
 					  </div>
 					</div>
@@ -35,29 +32,17 @@
 		    添加新地址
 		  </div>
 		</div>
+		<div id="deleteAddress" v-show="showDeleteAddress">
+	    <div class="weui-mask"></div>
+	    <div class="weui-dialog">
+	        <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
+	        <div class="weui-dialog__bd">确定要删除该地址吗？</div>
+	        <div class="weui-dialog__ft">
+	            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="showDeleteAddress=false">取消</a>
+	            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click='deleteAddressAction'>确定</a>
+	        </div>
+	    </div>
 	</div>
-	
-	<!-- <div class="address_list">
-		<ul>
-			<li v-for='(item, index) in addressList'>
-			<div class='addressInfo address' @click='choose(item)'>
-				<p>
-					<span>手机: {{item.phone}}; 姓名：{{item.name}}</span>
-				</p>
-				<p>
-					<span>{{item.province|city}};{{item.municipality|city}};{{item.region|city}};{{item.address}}</span>
-					<span v-if="item.default">默认</span>
-				</p>
-			</div>
-			<div class='address'>
-				<label @click="chooseDefult(item)"><span v-if="item.default" class="choose circle"></span><span v-else class="circle unchoose"></span>默认地址</label>
-				<a href="javascript:;" @click='editAddress(item)'>编辑</a>
-				<a href="javascript:;" @click='deleteAddress(item)'>删除</a>
-			</div>
-			<li>
-		</ul>
-		<a href="javascript:" @click="newAddress">添加新地址</a>
-	</div> -->
 </template>
 <style src="../less/purchase.less"></style>
 <style lang='less' scoped>
@@ -82,6 +67,11 @@
 				}
 			}
 		}
+		i {
+			font-size: 0.3rem;
+			margin-right: 0.2rem;
+			color: #ffb400;
+		}
 	}
 	.order-detail-footer {
 		position: absolute;
@@ -94,6 +84,13 @@
 		width: 0.2rem;
 		margin-right: 0.2rem;
 	}
+	* {
+		line-height: 2.2;
+	}
+</style>
+
+<style>
+	
 </style>
 <script>
 import HeadBar from './HeadBar'
@@ -104,17 +101,12 @@ export default {
 	components: {
 		HeadBar
 	},
-// 	vuex: {
-// 		getters: {
-// 			addressList
-// 		},
-// 		actions: {
-// 			chooseAddress,
-// 			getAddress,
-// 			deleteAddressAction,
-// 			chooseDefultAction
-// 		}
-// 	},
+	data () {
+		return {
+			showDeleteAddress: false,
+			deleteAddress: null
+		}
+	},
 	computed: {
 		...mapGetters({
 			addressList: 'addressList'
@@ -122,50 +114,62 @@ export default {
 	},
 	methods: {
 		choose (item) {
-			// this.chooseAddress(item, this.$router)
+			this.$store.dispatch('chooseAddress', {
+				item,
+				router: this.$router
+			})
+		},
+		showDialog (event, item) {
+			this.showDeleteAddress = true
+			this.deleteAddress = item
+			event.stopPropagation()
 		},
 		newAddress () {
-// 			this.$router.push({
-// 				name: 'address',
-// 				params: {
-// 					type: 'default',
-// 					data: {
-// 						province: '1;北京',
-// 						municipality: '1;东城区',
-// 						region: '0;请选择'
-// 					}
-// 				}
-// 			})
+			this.$router.push({
+				name: 'address',
+				params: {
+					type: 'default',
+					data: {
+						province: '1;北京',
+						municipality: '1;东城区',
+						region: '0;请选择'
+					}
+				}
+			})
 		},
-// 		deleteAddress (item) {
-// 			var params = {
-// 				address_id: item.id
-// 			}
-// 			this.deleteAddressAction(params)
-// 		},
+		deleteAddressAction () {
+			var params = {
+				address_id: this.deleteAddress.id
+			}
+			this.showDeleteAddress = false
+			this.$store.dispatch('deleteAddressAction', params)
+			// this.deleteAddressAction(params)
+		},
  		chooseDefult (item) {
 			var params = {
 				address_id: item.id
 			}
+			event.stopPropagation()
 			this.$store.dispatch('chooseDefultAction', params)
- 		}
-// 		editAddress (item) {
-// 			this.$router.push({
-// 				name: 'address',
-// 				params: {
-// 					type: 'edit',
-// 					data: {
-// 						address_id: item.id,
-// 						name: item.name,
-// 						phone: item.phone,
-// 						address: item.address,
-// 						province: item.province,
-// 						municipality: item.municipality,
-// 						region: item.region
-// 					}
-// 				}
-// 			})
-// 		}
+ 		},
+		editAddress (item) {
+			event.stopPropagation()
+			this.$router.push({
+				name: 'address',
+				params: {
+					type: 'edit',
+					data: {
+						address_id: item.id,
+						name: item.name,
+						phone: item.phone,
+						address: item.address,
+						province: item.province,
+						municipality: item.municipality,
+						region: item.region
+					}
+				}
+			})
+		}
 	},
 	created () {
 		this.$store.dispatch('getAddress')

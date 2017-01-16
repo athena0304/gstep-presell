@@ -23,6 +23,39 @@ const actions = {
 				data.msg === 'success' && actions.getAddress({ commit, state })
 			}
 		})
+	},
+	chooseAddress ({ commit }, params) {
+		let { item, router } = params
+		commit(types.CHOOSE_ADDRESS, item)
+		router.push('/confirm-order')
+	},
+	deleteAddressAction ({ commit, state }, params) {
+		shop.deleteAddress({
+			params,
+			cb: data => {
+				commit(types.DELETE_ADDRESS, params.address_id, data.res.default_address_id)
+			}
+		})
+	},
+	addAddressAction ({ dispatch, state }, params) {
+		let param = params.param
+		let router = params.router
+		shop.addAddress({
+			params: param,
+			cb: data => {
+				data.msg === 'success' && router.push('/address-list')
+			}
+		})
+	},
+	editAddressAction ({ dispatch, state }, params) {
+		let param = params.param
+		let router = params.router
+		shop.editAddress({
+			params: param,
+			cb: data => {
+				data.msg === 'success' && router.push('/address-list')
+			}
+		})
 	}
 }
 const mutations = {
@@ -40,11 +73,12 @@ const mutations = {
 	[types.DELETE_ADDRESS] (state, addressID, defaultAddressID) {
 		state.addressList.splice(state.addressList.findIndex(ele => ele.id === addressID), 1)
 		state.addressList.forEach(ele => {
-			if (ele.id === defaultAddressID) {
-				ele.default = true
-			} else {
-				ele.default = false
-			}
+			ele.default = (ele.id === defaultAddressID)
+			// if (ele.id === defaultAddressID) {
+			// 	ele.default = true
+			// } else {
+			// 	ele.default = false
+			// }
 		})
 	}
 }
