@@ -1,42 +1,66 @@
 <template>
     <div>
-       <head-bar>
-          <h3 class="title">购物袋</h3>
-      </head-bar>
-      <div class="order" v-for="(property, itemIndex) in cartListData">
-        <div class="order-inner vertical-middle">
-          <div class="">
-            <div class="checkbox checksimple">
-              <!-- <i class="weui-icon-success"></i> -->
-              <i class="weui-icon-circle"></i>
-          </div>
-      </div>
-      <div class="order-img">
-        <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
-    </div>
-    <div class="order-detail">
-        <p>
-          {{property.commodity_title}}
-      </p>
-      <p class="detail">
-          <span v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
-      </p>
-  </div>
-  <div class="price vertical-middle">
-    <p>
-      ￥{{property.price}}
-  </p>
-  <p>
-      ×{{property.count}}
-  </p>
-  <p class="close_order">
-      <i class='fa fa-times-circle'></i>
-  </p>
-</div>
-</div>
-</div>
+        <div class="main pre_index"> 
+            <head-bar>
+              <h3 class="title">购物袋</h3>
+            </head-bar>
+            <div class="order" v-for="(property, itemIndex) in cartListData">
+                <div class="order-inner vertical-middle">
 
-</div>
+                    <div class="checkbox checksimple">
+                        <!-- <i class="weui-icon-success"></i> -->
+                        <i class="weui-icon-circle"></i>
+                    </div>
+
+                    <div class="order-img">
+                        <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
+                    </div>
+                    <div class="order-detail">
+                        <p>
+                          {{property.commodity_title}}
+                        </p>
+                        <p class="detail">
+                            <span v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
+                        </p>
+                    </div>
+                    <div class="price vertical-middle">
+                        <p>￥{{property.price}}</p>
+                        <p>×{{property.count}}</p>
+                        <p class="close_order">
+                            <i class='fa fa-times-circle'></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="order-footer">
+          <div class="order-inner vertical-middle">
+            <div class="choose">
+              <!-- <input type="checkbox" name="" id=""> <span>全选</span> -->
+              <div class="checkbox checkall"><img src="" alt="" /></div><span>全选</span>
+            </div>
+            <div class="order-detail">
+
+            </div>
+            <div class="price vertical-middle">
+              <div class="price-detail">
+                <p>
+                  合计：￥<span class="total_price"></span>
+                </p>
+                <p class="detail">
+                  已选<span class="final_choose_number"></span>件 不包含运费
+                </p>
+              </div>
+              <div class="">
+                <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary purchase final_purchase">立即购买</a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+    </div>
 
 </template>
 
@@ -163,8 +187,6 @@
       font-size:14px;
       /*width: 100%;*/
       height: 1.2rem;
-      padding-left: 0.3rem;
-      padding-right: 0.3rem;
       background-color: #1b1615;
       padding-top: 0.05rem;
       box-sizing: border-box;
@@ -283,5 +305,37 @@
       background-color: #ffb400;
       border-color: #ffb400;
   }
+
+  .order-footer {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 14px;
+    /* width: 100%; */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.2rem;
+    background-color: #1b1615;
+    padding-top: 0.05rem;
+}
+.order-footer .choose span {
+    display: inline-block;
+    /* vertical-align: top; */
+    vertical-align: middle;
+    margin-left: 0.2rem;
+}
+
+.order-footer .price .price-detail p:nth-child(1) {
+    margin-bottom: 0.1rem;
+    font-size: 0.28rem;
+    color: #fff;
+}
+
+.order-footer .price .price-detail p {
+    color: #cacaca;
+    font-size: 0.18rem;
+    text-align: right;
+}
 
 </style>
