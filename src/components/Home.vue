@@ -85,7 +85,7 @@
 	<div class="footer button_active">
 		<router-link to="/shopping-bag">
 			<div class="haha">
-				<div class="tip">5</div>
+				<div class="tip">{{res.cart_count}}</div>
 			</div>
 		</router-link>
 		<div class="buttonArea">
