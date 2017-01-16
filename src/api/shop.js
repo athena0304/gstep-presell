@@ -81,10 +81,11 @@ export default {
 		})
 	},
 	/***************购物车页面**************/
-	getCartList (cb) {
+	getCartList (params, cb) {
 		ajax({
 			url: '/api/cart/get',
-			cb: cb
+			cb: cb,
+			params
 		})
 	},
 	getNumberInfo (cb) {
