@@ -18,9 +18,13 @@ const actions = {
 	},
 	chooseDefultAction ({ commit, state }, params) {
 		shop.chooseDefultAddress({
-			params,
+			params: params.param,
 			cb: data => {
-				data.msg === 'success' && actions.getAddress({ commit, state })
+				if (data.msg === 'success') {
+					params.callback && params.callback(function() {
+						actions.getAddress({ commit, state })
+					})
+				}
 			}
 		})
 	},
@@ -30,10 +34,17 @@ const actions = {
 		router.push('/confirm-order')
 	},
 	deleteAddressAction ({ commit, state }, params) {
+		let { param, callback } = params
 		shop.deleteAddress({
-			params,
+			params: param,
 			cb: data => {
-				commit(types.DELETE_ADDRESS, params.address_id, data.res.default_address_id)
+					let default_address_id = data.res.default_address_id
+					callback && callback(function() {
+						commit(types.DELETE_ADDRESS, {
+							address_id: param.address_id,
+							default_address_id
+						})
+				})
 			}
 		})
 	},
@@ -70,15 +81,12 @@ const mutations = {
 	[types.CHOOSE_ADDRESS] (state, chooseAddr) {
 		state.chooseAddress = state.addressList.find(item => item.id === chooseAddr.id)
 	},
-	[types.DELETE_ADDRESS] (state, addressID, defaultAddressID) {
+	[types.DELETE_ADDRESS] (state, params) {
+		let addressID = params.address_id
+		let defaultAddressID = params.default_address_id
 		state.addressList.splice(state.addressList.findIndex(ele => ele.id === addressID), 1)
 		state.addressList.forEach(ele => {
 			ele.default = (ele.id === defaultAddressID)
-			// if (ele.id === defaultAddressID) {
-			// 	ele.default = true
-			// } else {
-			// 	ele.default = false
-			// }
 		})
 	}
 }

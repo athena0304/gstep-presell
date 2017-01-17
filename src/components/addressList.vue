@@ -8,7 +8,7 @@
 			  <div class="main-body">
 					<div class="order addresses address" v-for='(item, index) in addressList' @click='choose(item)'>
 					  <div class="order-inner vertical-middle">
-					  	<label @click="chooseDefult(item)"><span v-if="item.default" class="choose circle"></span><span v-else class="circle unchoose"></span>默认地址</label>
+					  	<label><span v-if="item.default" class="choose circle"></span><span @click="chooseDefult(item)"v-else class="circle unchoose"></span>默认地址</label>
 					    <div class="order-detail address-detail">
 					      <p>
 					        <span v-if="item.default" class="default">【默认】</span><span class="name">{{item.name}}</span><span class="phone">{{item.phone}}</span>
@@ -43,9 +43,26 @@
 	        </div>
 	    </div>
 	</div>
+	<toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 </template>
 <style src="../less/purchase.less"></style>
 <style lang='less' scoped>
+	.order-detail-footer {
+		position: absolute;
+		bottom: 0;
+	}
+	.main {
+		top: 0.96rem;
+	}
+	.address_edit {
+		width: 0.2rem;
+		margin-right: 0.2rem;
+	}
+	* {
+		line-height: 2.2;
+	}
+</style>
+<style lang='less'>
 	.addressList {
 		cursor: pointer;
 		.address {
@@ -62,8 +79,18 @@
 				margin-right: 0.2rem;
 				border: 1px solid #f90;
 				border-radius: 50%;
+				position: relative;
 				&.choose {
 					background-color: #f90;
+				}
+				&.choose:before {
+					content: '√';
+    			color: #fff;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform:translate(-50%, -50%);
+					font-size: 0.2rem;
 				}
 			}
 		}
@@ -73,38 +100,25 @@
 			color: #ffb400;
 		}
 	}
-	.order-detail-footer {
-		position: absolute;
-		bottom: 0;
-	}
-	.main {
-		top: 0.96rem;
-	}
-	.address_edit {
-		width: 0.2rem;
-		margin-right: 0.2rem;
-	}
-	* {
-		line-height: 2.2;
-	}
-</style>
-
-<style>
-	
 </style>
 <script>
 import HeadBar from './HeadBar'
+import Toast from './Toast'
 import { mapGetters, mapActions } from 'vuex'
 // import { addressList } from '../vuex/getters'
 // import { chooseAddress, getAddress, deleteAddressAction, chooseDefultAction } from '../vuex/actions'
 export default {
 	components: {
-		HeadBar
+		HeadBar,
+		Toast
 	},
 	data () {
 		return {
 			showDeleteAddress: false,
-			deleteAddress: null
+			deleteAddress: null,
+			showMessage: "成功",
+			showToast: false,
+			toastCallback: null
 		}
 	},
 	computed: {
@@ -113,6 +127,9 @@ export default {
 		})
 	},
 	methods: {
+		fadeOut () {
+			this.showToast = false
+		},
 		choose (item) {
 			this.$store.dispatch('chooseAddress', {
 				item,
@@ -138,19 +155,37 @@ export default {
 			})
 		},
 		deleteAddressAction () {
+			var _self = this
+			let { showToast, showMessage } = this
 			var params = {
-				address_id: this.deleteAddress.id
+				param: {
+					address_id: this.deleteAddress.id
+				},
+				callback (fn) {
+					_self.toastCallback = fn || (function() {})
+					_self.showToast = true
+					_self.showMessage = '删除地址成功'
+				}
 			}
 			this.showDeleteAddress = false
 			this.$store.dispatch('deleteAddressAction', params)
-			// this.deleteAddressAction(params)
 		},
  		chooseDefult (item) {
+ 			var _self = this
+ 			let { showToast, showMessage } = this
 			var params = {
-				address_id: item.id
+				param: {
+					address_id: item.id
+				},
+				callback (fn) {
+					_self.toastCallback = fn || (function() {})
+					_self.showToast = true
+					_self.showMessage = '修改地址成功'
+				}
 			}
 			event.stopPropagation()
 			this.$store.dispatch('chooseDefultAction', params)
+			
  		},
 		editAddress (item) {
 			event.stopPropagation()
@@ -170,6 +205,9 @@ export default {
 				}
 			})
 		}
+	},
+	mounted () {
+		
 	},
 	created () {
 		this.$store.dispatch('getAddress')
