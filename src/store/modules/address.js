@@ -49,22 +49,24 @@ const actions = {
 		})
 	},
 	addAddressAction ({ dispatch, state }, params) {
-		let param = params.param
-		let router = params.router
+		let { param, router, callback } = params
 		shop.addAddress({
 			params: param,
 			cb: data => {
-				data.msg === 'success' && router.push('/address-list')
-			}
-		})
+					if (data.msg === 'success') {
+						callback && callback(() => router.push('/address-list'))
+					}
+				}
+			})
 	},
 	editAddressAction ({ dispatch, state }, params) {
-		let param = params.param
-		let router = params.router
+		let { param, router, callback } = params
 		shop.editAddress({
 			params: param,
 			cb: data => {
-				data.msg === 'success' && router.push('/address-list')
+				if (data.msg === 'success') {
+					callback && callback(() => router.push('/address-list'))
+				}
 			}
 		})
 	}
