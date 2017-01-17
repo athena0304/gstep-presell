@@ -69,7 +69,7 @@
 		vertical-align: middle;
 	}
 </style>
-<style lang='less'>
+<style lang='less' scoped>
 	.order {
 		line-height: 1.5rem;
 		height: auto;

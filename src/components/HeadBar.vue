@@ -13,7 +13,7 @@ export default {
 	}
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .header-bar {
   font-size: 0.36rem;
   background-color: #ffb400;

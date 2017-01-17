@@ -215,17 +215,19 @@ export default {
 		// }
 	},
 	beforeRouteLeave (to, from, next) {
-		if (this.address) {
-			next()
-			this.address = false
-			return
-		}
-		this.isShow = true
-		if (this.$store.getters.makeSure) {
-			next()
-			return
-		}
-		next(false)
+		// if (this.address) {
+		// 	next()
+		// 	this.address = false
+		// 	return
+		// }
+		// this.isShow = true
+		// if (this.$store.getters.makeSure) {
+		// 	next()
+		// 	return
+		// }
+		// next(false)
+
+		next()
 	},
 	mounted () {
 		this.$store.dispatch('changeMakeStatus', { status: false })
