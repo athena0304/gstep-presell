@@ -7,11 +7,10 @@
             <div class="order" v-for="(property, itemIndex) in cartListData">
                 <div class="order-inner vertical-middle">
 
-                    <div class="checkbox checksimple">
+                    
                         <!-- <i class="weui-icon-success"></i> -->
-                        <i class="weui-icon-circle"></i>
-                    </div>
-
+                        <!-- class="weui-icon-circle" -->
+                    <input type="checkbox" :value="property.order_id" class="checkbox-toggle" v-model="checkedItems" @change="selectItem">
                     <div class="order-img">
                         <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
                     </div>
@@ -38,7 +37,7 @@
           <div class="order-inner vertical-middle">
             <div class="choose">
               <!-- <input type="checkbox" name="" id=""> <span>全选</span> -->
-              <div class="checkbox checkall"><img src="" alt="" /></div><span>全选</span>
+              <div class="checkbox checkall"><input type="checkbox" class="checkbox-toggle"></div><span>全选</span>
             </div>
             <div class="order-detail">
 
@@ -46,10 +45,10 @@
             <div class="price vertical-middle">
               <div class="price-detail">
                 <p>
-                  合计：￥<span class="total_price"></span>
+                  合计：{{selectedData.selectedPrice}}￥<span class="total_price"></span>
                 </p>
                 <p class="detail">
-                  已选<span class="final_choose_number"></span>件 不包含运费
+                  已选<span class="final_choose_number">{{selectedData.selectedCount}}</span>件 不包含运费
                 </p>
               </div>
               <div class="">
@@ -72,13 +71,26 @@
     export default {
        data() {
           return{
-
+            icircleObject: {
+                'weui-icon-circle': true,
+                'weui-icon-success': false
+            },
+            checkedItems:[]
           }
       },
       computed: {
           ...mapGetters ({
             cartListData: 'cartListData',
+            selectedData: 'selectedData',
         }),
+      },
+      methods: {
+        selectItem() {
+            this.$store.dispatch('changeSelectItem', this.checkedItems)
+        },
+        toggleAllItem() {
+
+        }
       },
       created() {
           var _self = this;
@@ -207,6 +219,7 @@
   }
   .order-footer .choose {
       color: #fff;
+      padding-left: .3rem;
   }
   .order-footer .choose span {
       display: inline-block;
@@ -337,5 +350,38 @@
     font-size: 0.18rem;
     text-align: right;
 }
+.checkall {
+    display: inline-block;
+}
+
+.checkbox-toggle {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: normal normal normal 14px/1 weui;
+    background: none;
+    margin: auto 0;
+
+    &:after {
+        font-size: 23px;
+        color: #ffb400;
+    }
+
+}
+
+.checkbox-toggle:after {
+    content: "\EA01";
+}
+
+.checkbox-toggle:checked:after {
+    content: "\EA06";
+}
+
 
 </style>
