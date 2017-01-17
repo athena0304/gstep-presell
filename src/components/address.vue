@@ -51,26 +51,22 @@
 	      <div class="order-footer order-detail-footer add_new_finish" v-else-if='addressInfo.type === "edit"' @click="addressEdit">
 	        确定修改
 	      </div>
-
 	    </div>
 	  </div>
+	  <toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 	</div>
+	
 </template>
 <script>
-// import { addAddressAction, editAddressAction } from '../vuex/actions'
 import HeadBar from './HeadBar'
 import addAddress from './addAddress.vue'
+import Toast from './Toast'
 import { mapGetters, mapActions } from 'vuex'
 export default {
-	// vuex: {
-	// 	actions: {
-	// 		addAddressAction,
-	// 		editAddressAction
-	// 	}
-	// },
 	components: {
 		HeadBar,
-		addAddress
+		addAddress,
+		Toast
 	},
 	data () {
 		return {
@@ -78,7 +74,10 @@ export default {
 			name: '',
 			phone: '',
 			address: '',
-			address_id: ''
+			address_id: '',
+			showMessage: "成功",
+			showToast: false,
+			toastCallback: null
 		}
 	},
 	created () {
@@ -96,7 +95,11 @@ export default {
 		this.address_id = this.addressInfo.data.address_id
 	},
 	methods: {
+		fadeOut () {
+			this.showToast = false
+		},
 		addressAdd () {
+			var _self = this
 			var param = Object.assign({}, {
 				name: this.name,
 				phone: this.phone,
@@ -106,10 +109,16 @@ export default {
 			}, this.addressInfo.params)
 			this.$store.dispatch('addAddressAction', {
 				param,
-				router: this.$router
+				router: this.$router,
+				callback (fn) {
+					_self.toastCallback = fn || (function() {})
+					_self.showToast = true
+					_self.showMessage = '添加地址成功'
+				}
 			})
 		},
 		addressEdit () {
+			var _self = this
 			var param = Object.assign({}, {
 				address_id: this.address_id,
 				name: this.name,
@@ -119,7 +128,12 @@ export default {
 			}, this.addressInfo.params)
 			this.$store.dispatch('editAddressAction', {
 				param,
-				router: this.$router
+				router: this.$router,
+				callback (fn) {
+					_self.toastCallback = fn || (function() {})
+					_self.showToast = true
+					_self.showMessage = '修改地址成功'
+				}
 			})
 		}
 	}

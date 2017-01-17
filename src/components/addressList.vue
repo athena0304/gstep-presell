@@ -6,9 +6,8 @@
 		<div class="addressList">
 			<div class="main addresses">
 			  <div class="main-body">
-					<div class="order addresses address" v-for='(item, index) in addressList' @click='choose(item)'>
-					  <div class="order-inner vertical-middle">
-					  	<label @click="chooseDefult(item)"><span v-if="item.default" class="choose circle"></span><span v-else class="circle unchoose"></span>默认地址</label>
+					<div class="order addresses address" v-for='(item, index) in addressList'>
+					  <div class="order-inner address-context" @click='choose(item)'>
 					    <div class="order-detail address-detail">
 					      <p>
 					        <span v-if="item.default" class="default">【默认】</span><span class="name">{{item.name}}</span><span class="phone">{{item.phone}}</span>
@@ -17,13 +16,18 @@
 					        {{item.province|city}};{{item.municipality|city}};{{item.region|city}};{{item.address}}
 					      </p>
 					    </div>
-					    <div class="price vertical-middle">
-					    	<i class='fa fa-edit' @click="editAddress(item)"></i>
-					    	<i class='fa fa-times-circle' @click="showDialog($event, item)"></i>
-					    </div>
+					  </div>
+					  <div class="order-inner operation">
+					  <p class="operation-left">
+					  	<i v-if="item.default" class="weui-icon-success"></i>
+					  	<i @click="chooseDefult(item)" v-else class="weui-icon-circle"></i>
+					  </p>
+					  <p class='operation-right'>
+				  		<i class='fa fa-edit' @click="editAddress(item)"></i>
+				  		<i class='fa fa-times-circle' @click="showDialog($event, item)">
+					  	</p>
 					  </div>
 					</div>
-
 			  </div>
 			</div>
 		</div>
@@ -43,12 +47,56 @@
 	        </div>
 	    </div>
 	</div>
+	<toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 </template>
-<style src="../less/purchase.less" scoped></style>
+<!-- <style src="../less/purchase.less" scoped></style> -->
 <style lang='less' scoped>
+	.order-detail-footer {
+		position: absolute;
+		bottom: 0;
+	}
+	.main {
+		top: 0.96rem;
+	}
+	.address_edit {
+		width: 0.2rem;
+		margin-right: 0.2rem;
+	}
+	.weui-dialog__btn {
+		line-height: inherit;
+	}
+	[class*=" weui-icon-"]:before, [class^=weui-icon-]:before {
+		vertical-align: middle;
+	}
+</style>
+<style lang='less'>
+	.order {
+		line-height: 1.5rem;
+		height: auto;
+		padding-right: 0;
+		padding: .3rem;
+		padding-bottom: 0;
+	}
+	.operation {
+		overflow: hidden;
+		padding: .2rem 0;
+		.operation-right {
+			float:right;
+		}
+		.operation-left {
+			float:left;
+		}
+	}
+	.order-detail .default {
+	  color: #ffb400;
+	}
 	.addressList {
+		.address-context {
+			margin-bottom: .2rem;
+		}
 		cursor: pointer;
 		.address {
+			margin-bottom: 0.3rem;
 			&.addressInfo {
 				display: inline-block;
 				vertical-align: middle;
@@ -62,49 +110,58 @@
 				margin-right: 0.2rem;
 				border: 1px solid #f90;
 				border-radius: 50%;
+				position: relative;
 				&.choose {
 					background-color: #f90;
+				}
+				&.choose:before {
+					content: '√';
+    			color: #fff;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform:translate(-50%, -50%);
+					font-size: 0.2rem;
 				}
 			}
 		}
 		i {
 			font-size: 0.3rem;
 			margin-right: 0.2rem;
-			color: #ffb400;
+			color: #fff;
+			vertical-align: middle;
+			&.fa-edit:after {
+				content: '编辑';
+			}
+			&.fa-times-circle:after {
+				content: '删除';
+			};
+		}
+		i:after {
+			margin-left: 0.1rem;
+			font-size: 0.25rem;
+			content: '设为默认';
 		}
 	}
-	.order-detail-footer {
-		position: absolute;
-		bottom: 0;
-	}
-	.main {
-		top: 0.96rem;
-	}
-	.address_edit {
-		width: 0.2rem;
-		margin-right: 0.2rem;
-	}
-	* {
-		line-height: 2.2;
-	}
-</style>
-
-<style>
-	
 </style>
 <script>
 import HeadBar from './HeadBar'
+import Toast from './Toast'
 import { mapGetters, mapActions } from 'vuex'
 // import { addressList } from '../vuex/getters'
 // import { chooseAddress, getAddress, deleteAddressAction, chooseDefultAction } from '../vuex/actions'
 export default {
 	components: {
-		HeadBar
+		HeadBar,
+		Toast
 	},
 	data () {
 		return {
 			showDeleteAddress: false,
-			deleteAddress: null
+			deleteAddress: null,
+			showMessage: "成功",
+			showToast: false,
+			toastCallback: null
 		}
 	},
 	computed: {
@@ -113,6 +170,9 @@ export default {
 		})
 	},
 	methods: {
+		fadeOut () {
+			this.showToast = false
+		},
 		choose (item) {
 			this.$store.dispatch('chooseAddress', {
 				item,
@@ -138,19 +198,37 @@ export default {
 			})
 		},
 		deleteAddressAction () {
+			var _self = this
+			let { showToast, showMessage } = this
 			var params = {
-				address_id: this.deleteAddress.id
+				param: {
+					address_id: this.deleteAddress.id
+				},
+				callback (fn) {
+					_self.toastCallback = fn || (function() {})
+					_self.showToast = true
+					_self.showMessage = '删除地址成功'
+				}
 			}
 			this.showDeleteAddress = false
 			this.$store.dispatch('deleteAddressAction', params)
-			// this.deleteAddressAction(params)
 		},
  		chooseDefult (item) {
+ 			var _self = this
+ 			let { showToast, showMessage } = this
 			var params = {
-				address_id: item.id
+				param: {
+					address_id: item.id
+				},
+				callback (fn) {
+					_self.toastCallback = fn || (function() {})
+					_self.showToast = true
+					_self.showMessage = '修改地址成功'
+				}
 			}
 			event.stopPropagation()
 			this.$store.dispatch('chooseDefultAction', params)
+			
  		},
 		editAddress (item) {
 			event.stopPropagation()
@@ -170,6 +248,9 @@ export default {
 				}
 			})
 		}
+	},
+	mounted () {
+		
 	},
 	created () {
 		this.$store.dispatch('getAddress')
