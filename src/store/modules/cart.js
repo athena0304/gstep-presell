@@ -38,8 +38,32 @@ const mutations = {
 		state.total_price = data.total_price;
 	},
 	[types.CHANGE_SELECT_ITEM](state, checkedItemIds) {
+		// console.log(state.cartListData)
 		state.selectedData.checkedItemIds = checkedItemIds;
-		console.log(state.selectedData.checkedItemIds)
+
+		var cartListData = state.cartListData;
+		var selectedItemList = [];
+
+		checkedItemIds.forEach(function(item, index, array) {
+			cartListData.forEach(function(item2, index, array) {
+				if(item2.order_id == item) {
+					selectedItemList.push(item2)
+				}
+			})
+			
+		})
+		console.log(selectedItemList)
+
+		state.selectedData.selectedItemList = selectedItemList;
+		
+		
+		state.selectedData.selectedCount = checkedItemIds.length;
+		var price = 0;
+		state.selectedData.selectedItemList.forEach(function(item, index, array) {
+			price = price +  item.price;
+		})
+		state.selectedData.selectedPrice = price;
+		
 	},
 }
 

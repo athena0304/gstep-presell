@@ -37,7 +37,7 @@
           <div class="order-inner vertical-middle">
             <div class="choose">
               <!-- <input type="checkbox" name="" id=""> <span>全选</span> -->
-              <div class="checkbox checkall"><input type="checkbox" class="checkbox-toggle"></div><span>全选</span>
+              <div class="checkbox checkall"><input type="checkbox" class="checkbox-toggle" v-model="slelectAll" @change="toggleAllItem"></div><span>全选</span>
             </div>
             <div class="order-detail">
 
@@ -52,7 +52,7 @@
                 </p>
               </div>
               <div class="">
-                <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary purchase final_purchase">立即购买</a>
+                <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary purchase_to_order" @click="goToBuy">立即购买</a>
               </div>
 
             </div>
@@ -75,7 +75,8 @@
                 'weui-icon-circle': true,
                 'weui-icon-success': false
             },
-            checkedItems:[]
+            checkedItems: [],
+            slelectAll: null
           }
       },
       computed: {
@@ -89,7 +90,13 @@
             this.$store.dispatch('changeSelectItem', this.checkedItems)
         },
         toggleAllItem() {
-
+          console.log(this.slelectAll)
+        },
+        goToBuy() {
+          if(this.$store.getters.selectedData.checkedItemIds.length !== 0 ) {
+            // console.log("gotobuy")
+            this.$router.push({ name: 'ConfirmOrder'})
+          }
         }
       },
       created() {
@@ -104,7 +111,7 @@
       }
   }
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .order {
       height: 1.48rem;
       background-color: rgba(50, 48, 48, 0.7);
