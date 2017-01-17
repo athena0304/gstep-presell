@@ -44,10 +44,13 @@ const mutations = {
 		var cartListData = state.cartListData;
 		var selectedItemList = [];
 
+		var selectedCount = 0; 
+
 		checkedItemIds.forEach(function(item, index, array) {
 			cartListData.forEach(function(item2, index, array) {
 				if(item2.order_id == item) {
 					selectedItemList.push(item2)
+					selectedCount = selectedCount+ item2.count;
 				}
 			})
 			
@@ -57,7 +60,7 @@ const mutations = {
 		state.selectedData.selectedItemList = selectedItemList;
 		
 		
-		state.selectedData.selectedCount = checkedItemIds.length;
+		state.selectedData.selectedCount = selectedCount;
 		var price = 0;
 		state.selectedData.selectedItemList.forEach(function(item, index, array) {
 			price = price +  item.price;
