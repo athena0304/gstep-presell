@@ -45,7 +45,7 @@
 	</div>
 	<toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 </template>
-<style src="../less/purchase.less"></style>
+<style src="../less/purchase.less" scoped></style>
 <style lang='less' scoped>
 	.order-detail-footer {
 		position: absolute;
