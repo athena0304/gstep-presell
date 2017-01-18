@@ -46,8 +46,9 @@
 	            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click='deleteAddressAction'>确定</a>
 	        </div>
 	    </div>
+	  </div>	
+		<toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 	</div>
-	<toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 </template>
 <!-- <style src="../less/purchase.less" scoped></style> -->
 <style lang='less' scoped>

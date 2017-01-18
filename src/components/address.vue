@@ -1,4 +1,5 @@
 <template>
+<div>
 	<div class="main new_addresses">
 		<head-bar>
 			<h3 class="title">添加／编辑地址</h3>
@@ -44,17 +45,18 @@
 	        </div>
 	      </div>
 	    </div>
-	    <div class="order-footer">
-	      <div class="order-footer order-detail-footer add_new_finish" v-if='addressInfo.type === "default"' @click="addressAdd">
-	        确定添加
-	      </div>
-	      <div class="order-footer order-detail-footer add_new_finish" v-else-if='addressInfo.type === "edit"' @click="addressEdit">
-	        确定修改
-	      </div>
-	    </div>
 	  </div>
-	  <toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
 	</div>
+	<div class="order-footer address-order-footer">
+	  <div class="order-footer order-detail-footer add_new_finish" v-if='addressInfo.type === "default"' @click="addressAdd">
+	    确定添加
+	  </div>
+	  <div class="order-footer order-detail-footer add_new_finish" v-else-if='addressInfo.type === "edit"' @click="addressEdit">
+	    确定修改
+	  </div>
+	</div>
+	<toast :message='showMessage' :show='showToast' v-on:fadeOut='fadeOut' :callback='toastCallback'></toast>	
+</div>
 	
 </template>
 <script>
@@ -150,7 +152,11 @@ export default {
 	.name-title {
 		width: 1.6rem;
 	}
-
+	.address-order-footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
 	.new_addresses .order.comment input,  .order.comment select{
 	    width: 4.6rem;;
 	    height: 0.6rem;

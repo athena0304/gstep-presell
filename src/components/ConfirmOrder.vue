@@ -190,7 +190,6 @@ export default {
 		// 	return
 		// }
 		// next(false)
-
 		next()
 	},
 	mounted () {
