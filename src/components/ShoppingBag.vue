@@ -83,14 +83,28 @@
           ...mapGetters ({
             cartListData: 'cartListData',
             selectedData: 'selectedData',
-        }),
+        })
+      },
+      watch: {
+        slelectAll(val) {
+          if(val) {
+            this.checkedItems = this.cartListData.map(function(item) {
+            return item.order_id
+          })
+          } else {
+            this.checkedItems = []
+          }
+          this.$store.dispatch('changeSelectItem', this.checkedItems)
+          
+          // console.log(this.icircleObject['weui-icon-success'])
+        }
       },
       methods: {
         selectItem() {
             this.$store.dispatch('changeSelectItem', this.checkedItems)
         },
         toggleAllItem() {
-          console.log(this.slelectAll)
+          // console.log(this.slelectAll)
         },
         goToBuy() {
           if(this.$store.getters.selectedData.checkedItemIds.length !== 0 ) {
