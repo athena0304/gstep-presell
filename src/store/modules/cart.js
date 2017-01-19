@@ -56,7 +56,6 @@ const mutations = {
 			})
 			
 		})
-		console.log(selectedItemList)
 
 		state.selectedData.selectedItemList = selectedItemList;
 		

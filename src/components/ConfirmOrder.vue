@@ -34,9 +34,9 @@
 			        <div class="order-detail">
 			          共<span class="order_total_number">{{selectedData.selectedCount}}</span>件商品
 			        </div>
-			        <div class="price vertical-middle">
+<!-- 			        <div class="price vertical-middle">
 			          <img src="~static/img/arrow.png" alt="" style="width:0.2rem">
-			        </div>
+			        </div> -->
 			      </div>
 			    </div>
 			    <div class="order-show">

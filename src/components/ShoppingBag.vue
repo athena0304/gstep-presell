@@ -33,7 +33,7 @@
           <div class="order-inner vertical-middle">
             <div class="choose">
               <!-- <input type="checkbox" name="" id=""> <span>全选</span> -->
-              <div class="checkbox checkall"><input type="checkbox" class="checkbox-toggle" v-model="slelectAll" @change="toggleAllItem"></div><span>全选</span>
+              <div class="checkbox checkall"><input type="checkbox" class="checkbox-toggle" v-model="slelectAll"></div><span>全选</span>
             </div>
             <div class="order-detail">
 
@@ -71,8 +71,8 @@
                     'weui-icon-circle': true,
                     'weui-icon-success': false
                 },
-                checkedItems: [],
-                slelectAll: false
+                // checkedItems: [],
+                // slelectAll: false
             }
         },
         computed: {
@@ -80,42 +80,25 @@
                 cartListData: 'cartListData',
                 selectedData: 'selectedData',
             }),
-            // slelectAll: {
-            //     get: function() {
-            //         return this.selectedData.isSelectAll
-            //     },
-            //     set (val) {
-            //         if(val) {
-            //             this.checkedItems = this.cartListData.map(function(item) {
-            //             return item.order_id
-            //             })
-            //         } else {
-            //             this.checkedItems = []
-            //         }
-            //         this.$store.dispatch('changeSelectItem', this.checkedItems)
-            //     }
-            // }
+            slelectAll: {
+                get: function() {
+                    return this.selectedData.selectedItemList.length == this.cartListData.length
+                },
+                set (val) {
+                    if(val) {
+                        this.checkedItems = this.cartListData.map(function(item) {
+                        return item.order_id
+                        })
+                    } else {
+                        this.checkedItems = []
+                    }
+                    this.$store.dispatch('changeSelectItem', this.checkedItems)
+                }
+            },
         },
-      watch: {
-        slelectAll(val) {
-          if(val) {
-            this.checkedItems = this.cartListData.map(function(item) {
-            return item.order_id
-          })
-          } else {
-            this.checkedItems = []
-          }
-          this.$store.dispatch('changeSelectItem', this.checkedItems)
-          
-          // console.log(this.icircleObject['weui-icon-success'])
-        }
-      },
       methods: {
         selectItem() {
             this.$store.dispatch('changeSelectItem', this.checkedItems)
-        },
-        toggleAllItem() {
-          // console.log(this.slelectAll)
         },
         goToBuy() {
           if(this.$store.getters.selectedData.checkedItemIds.length !== 0 ) {
@@ -129,7 +112,7 @@
           shop.getCartList({}, function(data) {
              _self.$store.dispatch('initCartData', data.res)
          })
-          // this.checkedItems = this.selectedData.checkedItemIds;
+          this.checkedItems = this.selectedData.checkedItemIds;
           // this.slelectAll = !(this.checkedItems.length === this.cartListData.length)
 
       },
