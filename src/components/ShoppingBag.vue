@@ -6,10 +6,6 @@
             </head-bar>
             <div class="order" v-for="(property, itemIndex) in cartListData">
                 <div class="order-inner vertical-middle">
-
-                    
-                        <!-- <i class="weui-icon-success"></i> -->
-                        <!-- class="weui-icon-circle" -->
                     <input type="checkbox" :value="property.order_id" class="checkbox-toggle" v-model="checkedItems" @change="selectItem">
                     <div class="order-img">
                         <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
@@ -69,22 +65,37 @@
     import { mapGetters, mapActions } from 'vuex'
 
     export default {
-       data() {
-          return{
-            icircleObject: {
-                'weui-icon-circle': true,
-                'weui-icon-success': false
-            },
-            checkedItems: [],
-            slelectAll: null
-          }
-      },
-      computed: {
-          ...mapGetters ({
-            cartListData: 'cartListData',
-            selectedData: 'selectedData',
-        })
-      },
+        data() {
+            return{
+                icircleObject: {
+                    'weui-icon-circle': true,
+                    'weui-icon-success': false
+                },
+                checkedItems: [],
+                slelectAll: false
+            }
+        },
+        computed: {
+            ...mapGetters ({
+                cartListData: 'cartListData',
+                selectedData: 'selectedData',
+            }),
+            // slelectAll: {
+            //     get: function() {
+            //         return this.selectedData.isSelectAll
+            //     },
+            //     set (val) {
+            //         if(val) {
+            //             this.checkedItems = this.cartListData.map(function(item) {
+            //             return item.order_id
+            //             })
+            //         } else {
+            //             this.checkedItems = []
+            //         }
+            //         this.$store.dispatch('changeSelectItem', this.checkedItems)
+            //     }
+            // }
+        },
       watch: {
         slelectAll(val) {
           if(val) {
@@ -118,6 +129,8 @@
           shop.getCartList({}, function(data) {
              _self.$store.dispatch('initCartData', data.res)
          })
+          // this.checkedItems = this.selectedData.checkedItemIds;
+          // this.slelectAll = !(this.checkedItems.length === this.cartListData.length)
 
       },
       components: {

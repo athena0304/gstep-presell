@@ -8,7 +8,8 @@ const state = {
 		selectedPrice: 0,
 		selectedItemList:[],
 		selectedCount: 0,
-		checkedItemIds: []
+		checkedItemIds: [],
+		isSelectAll: false
 	},
 	total_price: null
 }
