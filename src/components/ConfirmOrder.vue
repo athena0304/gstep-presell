@@ -39,7 +39,27 @@
 			        </div>
 			      </div>
 			    </div>
-			    <div class="order-show"></div>
+			    <div class="order-show">
+			    	<div class="order" v-for="(property, itemIndex) in selectedData.selectedItemList">
+			    	    <div class="order-inner vertical-middle">
+			    	        <div class="order-img">
+			    	            <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
+			    	        </div>
+			    	        <div class="order-detail">
+			    	            <p>
+			    	              {{property.commodity_title}}
+			    	            </p>
+			    	            <p class="detail">
+			    	                <span v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
+			    	            </p>
+			    	        </div>
+			    	        <div class="price vertical-middle">
+			    	            <p>￥{{property.price}}</p>
+			    	            <p>×{{property.count}}</p>
+			    	        </div>
+			    	    </div>
+			    	</div>
+			    </div>
 
 			    <div class="order yunfei" style="">
 			      <div class="order-inner vertical-middle">
