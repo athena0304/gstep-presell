@@ -8,8 +8,8 @@ const state = {
 		selectedPrice: 0,
 		selectedItemList:[],
 		selectedCount: 0,
-		checkedItemIds: [],
-		isSelectAll: false
+		checkedItemIndex: [],
+		isSelectAll: false,
 	},
 	total_price: null
 }
@@ -26,8 +26,8 @@ const actions = {
 	initCartData ({ commit, state }, data) {
 		commit(types.INIT_CART_DATA, data)
 	},
-	changeSelectItem ({ commit, state }, checkedItemIds) {
-		commit(types.CHANGE_SELECT_ITEM, checkedItemIds)
+	changeSelectItem ({ commit, state }, checkedItemIndex) {
+		commit(types.CHANGE_SELECT_ITEM, checkedItemIndex)
 	}
 
 }
@@ -36,37 +36,30 @@ const actions = {
 const mutations = {
 	//初始化购物车数据
 	[types.INIT_CART_DATA](state, data) {
-		//data.orders是一个list，现在我想把这个转换成一个以order_id为key值的dict
 		state.cartListData = data.orders;
 		state.total_price = data.total_price;
 	},
 	//选择商品项目
-	[types.CHANGE_SELECT_ITEM](state, checkedItemIds) {
-		state.selectedData.checkedItemIds = checkedItemIds;
+	[types.CHANGE_SELECT_ITEM](state, checkedItemIndex) {
+		state.selectedData.checkedItemIndex = checkedItemIndex;
 
 		var cartListData = state.cartListData;
-		var selectedItemList = [];
-
+		var selectedItemList = []
 		var selectedCount = 0; 
-
-		checkedItemIds.forEach(function(item, index, array) {
-			cartListData.forEach(function(item2, index, array) {
-				if(item2.order_id == item) {
-					selectedItemList.push(item2)
-					selectedCount = selectedCount+ item2.count;
-				}
-			})
-			
-		})
-
-		state.selectedData.selectedItemList = selectedItemList;
-		
-		
-		state.selectedData.selectedCount = selectedCount;
 		var price = 0;
-		state.selectedData.selectedItemList.forEach(function(item, index, array) {
-			price = price +  item.price;
-		})
+
+		for(let index of checkedItemIndex) {
+			var selectItem = cartListData[index]
+			//已选中数组
+			selectedItemList.push(selectItem)
+			//总数
+			selectedCount = selectedCount + selectItem.count;
+			//总价
+			price = price +  selectItem.price;
+		}
+
+		state.selectedData.selectedCount = selectedCount;
+		state.selectedData.selectedItemList = selectedItemList;
 		state.selectedData.selectedPrice = price;
 		
 	},

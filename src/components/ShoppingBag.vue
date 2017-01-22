@@ -6,7 +6,7 @@
             </head-bar>
             <div class="order" v-for="(property, itemIndex) in cartListData" @touchmove="swipeDelete">
                 <div class="order-inner vertical-middle">
-                    <input type="checkbox" :value="property.order_id" class="checkbox-toggle" v-model="checkedItems" @change="selectItem">
+                    <input type="checkbox" :value="itemIndex" class="checkbox-toggle" v-model="checkedItems" @change="selectItem">
                     <div class="order-img">
                         <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
                     </div>
@@ -86,8 +86,8 @@
                 },
                 set (val) {
                     if(val) {
-                        this.checkedItems = this.cartListData.map(function(item) {
-                        return item.order_id
+                        this.checkedItems = this.cartListData.map(function(item, index, array) {
+                        return index
                         })
                     } else {
                         this.checkedItems = []
@@ -101,7 +101,7 @@
             this.$store.dispatch('changeSelectItem', this.checkedItems)
         },
         goToBuy() {
-          if(this.$store.getters.selectedData.checkedItemIds.length !== 0 ) {
+          if(this.$store.getters.selectedData.checkedItemIndex.length !== 0 ) {
             // console.log("gotobuy")
             this.$router.push({ name: 'ConfirmOrder'})
           }
@@ -118,7 +118,7 @@
           shop.getCartList({}, function(data) {
              _self.$store.dispatch('initCartData', data.res)
          })
-          this.checkedItems = this.selectedData.checkedItemIds;
+          this.checkedItems = this.selectedData.checkedItemIndex;
           // this.slelectAll = !(this.checkedItems.length === this.cartListData.length)
 
       },
