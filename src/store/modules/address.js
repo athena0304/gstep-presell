@@ -73,7 +73,7 @@ const actions = {
 }
 const mutations = {
 	[types.CHANGE_DEFAULT] (state) {
-		console.log('ll')
+		// console.log('ll')
 	},
 	[types.GET_ADDRESS] (state, address) {
 		address.res.default && address.res.other.unshift(address.res.default)

@@ -34,12 +34,14 @@ const actions = {
 
 // mutations
 const mutations = {
+	//初始化购物车数据
 	[types.INIT_CART_DATA](state, data) {
+		//data.orders是一个list，现在我想把这个转换成一个以order_id为key值的dict
 		state.cartListData = data.orders;
 		state.total_price = data.total_price;
 	},
+	//选择商品项目
 	[types.CHANGE_SELECT_ITEM](state, checkedItemIds) {
-		// console.log(state.cartListData)
 		state.selectedData.checkedItemIds = checkedItemIds;
 
 		var cartListData = state.cartListData;

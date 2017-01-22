@@ -4,7 +4,7 @@
             <head-bar>
               <h3 class="title">购物袋</h3>
             </head-bar>
-            <div class="order" v-for="(property, itemIndex) in cartListData">
+            <div class="order" v-for="(property, itemIndex) in cartListData" @touchmove="swipeDelete">
                 <div class="order-inner vertical-middle">
                     <input type="checkbox" :value="property.order_id" class="checkbox-toggle" v-model="checkedItems" @change="selectItem">
                     <div class="order-img">
@@ -22,7 +22,7 @@
                         <p>￥{{property.price}}</p>
                         <p>×{{property.count}}</p>
                         <p class="close_order">
-                            <i class='fa fa-times-circle'></i>
+                            <i @click="deleteCartItem" class='fa fa-times-circle'></i>
                         </p>
                     </div>
                 </div>
@@ -105,6 +105,12 @@
             // console.log("gotobuy")
             this.$router.push({ name: 'ConfirmOrder'})
           }
+        },
+        deleteCartItem() {
+            console.log("delete")
+        },
+        swipeDelete() {
+            console.log("ddddd")
         }
       },
       created() {
