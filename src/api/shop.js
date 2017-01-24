@@ -88,6 +88,13 @@ export default {
 			params
 		})
 	},
+	deleteCartItem (params, cb) {
+		ajax({
+			url: '/api/cart/delete',
+			cb: cb,
+			params
+		})
+	},
 	getNumberInfo (cb) {
 		ajax({
 			url: '/api/number_info',

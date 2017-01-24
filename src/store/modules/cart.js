@@ -28,21 +28,29 @@ const actions = {
 	},
 	changeSelectItem ({ commit, state }, checkedItemIndex) {
 		commit(types.CHANGE_SELECT_ITEM, checkedItemIndex)
+	},
+	deleteCartItem ({ commit, state }, itemIndex) {
+		commit(types.DELETE_CART_ITEM, itemIndex)
 	}
 
 }
+
+
 
 // mutations
 const mutations = {
 	//初始化购物车数据
 	[types.INIT_CART_DATA](state, data) {
+		
+		for(let item of data.orders) {
+			item.isChecked = false
+		}
 		state.cartListData = data.orders;
+
+		// console.log(state.cartListData)
 		state.total_price = data.total_price;
 	},
-	//选择商品项目
-	[types.CHANGE_SELECT_ITEM](state, checkedItemIndex) {
-		state.selectedData.checkedItemIndex = checkedItemIndex;
-
+	initSelectData (state, checkedItemIndex) {
 		var cartListData = state.cartListData;
 		var selectedItemList = []
 		var selectedCount = 0; 
@@ -50,6 +58,7 @@ const mutations = {
 
 		for(let index of checkedItemIndex) {
 			var selectItem = cartListData[index]
+			selectItem.isChecked = true;
 			//已选中数组
 			selectedItemList.push(selectItem)
 			//总数
@@ -61,7 +70,26 @@ const mutations = {
 		state.selectedData.selectedCount = selectedCount;
 		state.selectedData.selectedItemList = selectedItemList;
 		state.selectedData.selectedPrice = price;
-		
+	},
+	//选择商品项目
+	[types.CHANGE_SELECT_ITEM](state, checkedItemIndex) {
+		state.selectedData.checkedItemIndex = checkedItemIndex;
+		mutations.initSelectData(state, checkedItemIndex)	
+	},
+	//删除购物车选项
+	[types.DELETE_CART_ITEM](state, itemIndex) {
+		state.cartListData.splice(itemIndex, 1)
+
+		var checkedArr = [];
+        state.cartListData.forEach((item, index) => {
+            if(item.isChecked) {
+                checkedArr.push(index)
+            }
+        });
+        state.selectedData.checkedItemIndex = checkedArr;
+
+        mutations.initSelectData(state, checkedArr)
+        
 	},
 }
 

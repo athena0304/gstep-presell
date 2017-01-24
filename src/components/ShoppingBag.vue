@@ -22,7 +22,7 @@
                         <p>￥{{property.price}}</p>
                         <p>×{{property.count}}</p>
                         <p class="close_order">
-                            <i @click="deleteCartItem" class='fa fa-times-circle'></i>
+                            <i @click="deleteCartItem(itemIndex)" class='fa fa-times-circle'></i>
                         </p>
                     </div>
                 </div>
@@ -71,8 +71,6 @@
                     'weui-icon-circle': true,
                     'weui-icon-success': false
                 },
-                // checkedItems: [],
-                // slelectAll: false
             }
         },
         computed: {
@@ -106,8 +104,20 @@
             this.$router.push({ name: 'ConfirmOrder'})
           }
         },
-        deleteCartItem() {
-            console.log("delete")
+        deleteCartItem(itemIndex) {
+            var _self = this;
+            // shop.deleteCartItem({}, function(data) {
+             _self.$store.dispatch('deleteCartItem', itemIndex)
+             
+             this.checkedItems = this.$store.getters.selectedData.checkedItemIndex;
+
+             // var index = this.checkedItems.findIndex(x => x===itemIndex)
+             // if(index >= 0) {
+             //    this.checkedItems.splice(index, 1);
+             // }
+             
+             // console.log(this.checkedItems)
+            // })
         },
         swipeDelete() {
             console.log("ddddd")
@@ -118,8 +128,13 @@
           shop.getCartList({}, function(data) {
              _self.$store.dispatch('initCartData', data.res)
          })
-          this.checkedItems = this.selectedData.checkedItemIndex;
-          // this.slelectAll = !(this.checkedItems.length === this.cartListData.length)
+          var aaa = [];
+          this.cartListData.forEach((item, index) => {
+            if(item.isChecked) {
+                aaa.push(index)
+            }
+          });
+          this.checkedItems = aaa;
 
       },
       components: {
