@@ -34,9 +34,6 @@
 			        <div class="order-detail">
 			          共<span class="order_total_number">{{selectedData.selectedCount}}</span>件商品
 			        </div>
-<!-- 			        <div class="price vertical-middle">
-			          <img src="~static/img/arrow.png" alt="" style="width:0.2rem">
-			        </div> -->
 			      </div>
 			    </div>
 			    <div class="order-show">
@@ -151,12 +148,6 @@ export default {
 		CchooseAddr () {
 			return this.chooseAddr || this.defaultAddress
 		}
-		// total () {
-		// 	return this.makeOrderList.reduce(generate(this.add), 0)
-		// },
-		// ids () {
-		// 	return Array.from({ length: this.makeOrderList.length }, (v, k) => this.makeOrderList[k].id)
-		// }
 	},
 	methods: {
 
@@ -167,17 +158,6 @@ export default {
 					name: 'addressList'
 				})
 			}
-		// 	this.$router.push({
-		// 		name: 'address',
-		// 		params: {
-		// 			type: 'default',
-		// 			data: {
-		// 				province: '1;北京',
-		// 				municipality: '1;东城区',
-		// 				region: '0;请选择'
-		// 			}
-		// 		}
-		// 	})
 		},
 		makePurchase () {
 			this.$store.dispatch('makeOrder', {
@@ -185,31 +165,8 @@ export default {
 				ids: [1,2,3],
 				router: this.$router })
 		}
-		// makesure () {
-		// 	this.isShow = false
-		// 	this.changeMakeStatus(true)
-		// 	this.$router.go(-1)
-		// },
-		// makegiveup () {
-		// 	this.isShow = false
-		// 	this.changeMakeStatus(false)
-		// },
-		// add (a, b) {
-		// 	return parseInt(a) + parseInt(b.cost)
-		// }
 	},
 	beforeRouteLeave (to, from, next) {
-		// if (this.address) {
-		// 	next()
-		// 	this.address = false
-		// 	return
-		// }
-		// this.isShow = true
-		// if (this.$store.getters.makeSure) {
-		// 	next()
-		// 	return
-		// }
-		// next(false)
 		next()
 	},
 	mounted () {
