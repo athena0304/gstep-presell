@@ -170,5 +170,12 @@ export default {
 			params,
 			cb
 		})
+	},
+	orderPay ({ params, cb }) {
+		ajax({
+			url: '/api/order/add',
+			params,
+			cb
+		})
 	}
 }

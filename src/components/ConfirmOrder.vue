@@ -166,10 +166,34 @@ export default {
 			}
 		},
 		makePurchase () {
-			this.$store.dispatch('makeOrder', {
-				// ids: this.ids,
-				ids: [1,2,3],
-				router: this.$router })
+
+			var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
+			var _self = this
+			shop.orderPay({
+				params: JSON.stringify({'address_id': this.CchooseAddr.id, order_ids: order_ids}),
+				cb: data => {
+					if(data.code!=0){
+            if(data.code==30005){ //用户未登陆, 直接跳转到登陆认证接口，并带上当前的url,认证登陆完毕再跳转>回来
+            	window.location.href="http://preseller.gsteps.cn/api/user/oauth"+"?current_url="+escape(window.location.href)
+            }
+          }else{
+          	WeixinJSBridge.invoke(
+          		'getBrandWCPayRequest', data.res.appapi_params,
+	          	 function(res){
+	          			if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+	          				_self.$router.push('/')
+	          			}
+	          			if(res.err_msg == "get_brand_wcpay_request:cancel" ) {
+	          				alert('支付被取消');
+	          			}
+	          			if(res.err_msg == "get_brand_wcpay_request:fail" ) {
+	          				alert(JSON.stringify(res))
+	          			}
+	          		}
+          		);
+          }
+				}
+			})
 		}
 	},
 	beforeRouteLeave (to, from, next) {
