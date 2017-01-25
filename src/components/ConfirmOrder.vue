@@ -20,7 +20,7 @@
 			        			</p>
 			        		</div>
 			        		<div v-else>
-			        				去添加地址
+			        				<span @click="addAddress">去添加地址</span>
 			        		</div>
 			        	</div>
 			        </div>
@@ -156,6 +156,10 @@ export default {
 			if (this.CchooseAddr) {
 				return this.$router.push({
 					name: 'addressList'
+				})
+			} else {
+				return this.$router.push({
+					name: 'address'
 				})
 			}
 		},
