@@ -156,5 +156,12 @@ export default {
 			params,
 			cb
 		})
+	},
+	checkLogin ({ params, cb }) {
+		ajax({
+			url: '/api/user/checklogin',
+			params,
+			cb
+		})
 	}
 }

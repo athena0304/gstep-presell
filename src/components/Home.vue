@@ -100,7 +100,6 @@
 <script>
 import shop from '../api/shop'
 import PurchasePanel from './PurchasePanel'
-
 export default {
 	data () {
 		return {
@@ -129,15 +128,25 @@ export default {
 			
 		}
 	},
+	beforeRouteEnter (to, from, next) {
+		shop.checkLogin({
+			params: {},
+			cb: data => {
+				if(!data.res.login){
+		      return window.location.href="http://preseller.gsteps.cn/api/user/oauth"+"?current_url="+escape(window.location.href)
+		    }
+		    next()
+			}
+		})
+  },
 	created () {
+		// this.$store.dispatch('checkLogin', {})
 		var _self = this;
 		shop.getHomeData(function(data) {
-			console.log(data)
 			_self.res = data.res
 
 		})
-	},
-	
+	}
 }
 
 </script>

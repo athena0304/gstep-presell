@@ -29,6 +29,16 @@ const actions = {
 	changeItem ({ commit, state , rootState}, data) {
 		commit(types.CHANGE_ITEM, data)
 		getPrice({ commit, rootState })
+	},
+	checkLogin ({ commit, state }, params) {
+		shop.checkLogin({
+			params: {},
+			cb: data => {
+				// var makeOrderList = rootState.productList.product_list.filter(item => ids.includes(item.id))
+				commit(types.CHECK_LOGIN, { params, data })
+			}
+		})
+		
 	}
 
 }
@@ -57,6 +67,13 @@ const mutations = {
 
 		var attributes = state.initData.attributes;
 		state.selected_option_ids = initSelectOption(attributes);
+	},
+	[types.CHECK_LOGIN](state, data) {
+		if(data.data.res.login){
+        // alert("登陆成功");
+    }else{
+        window.location.href="http://preseller.gsteps.cn/api/user/oauth"+"?current_url="+window.location.href
+		}
 	}
 }
 
