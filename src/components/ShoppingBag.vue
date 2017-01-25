@@ -78,6 +78,7 @@
                 cartListData: 'cartListData',
                 selectedData: 'selectedData',
             }),
+            //全选
             slelectAll: {
                 get: function() {
                     return this.selectedData.selectedItemList.length == this.cartListData.length
@@ -92,49 +93,45 @@
                     }
                     this.$store.dispatch('changeSelectItem', this.checkedItems)
                 }
-            },
+            }
         },
       methods: {
+        //选择条目
         selectItem() {
             this.$store.dispatch('changeSelectItem', this.checkedItems)
         },
+        //立即购买的跳转
         goToBuy() {
           if(this.$store.getters.selectedData.checkedItemIndex.length !== 0 ) {
-            // console.log("gotobuy")
             this.$router.push({ name: 'ConfirmOrder'})
           }
         },
+        //删除条目
         deleteCartItem(itemIndex) {
             var _self = this;
-            // shop.deleteCartItem({}, function(data) {
-             _self.$store.dispatch('deleteCartItem', itemIndex)
-             
-             this.checkedItems = this.$store.getters.selectedData.checkedItemIndex;
-
-             // var index = this.checkedItems.findIndex(x => x===itemIndex)
-             // if(index >= 0) {
-             //    this.checkedItems.splice(index, 1);
-             // }
-             
-             // console.log(this.checkedItems)
-            // })
+            var order_ids = this.$store.getters.cartListData[itemIndex].order_id;
+            shop.deleteCartItem({order_ids: [order_ids]}, function(data) {
+                _self.$store.dispatch('deleteCartItem', itemIndex)
+                this.checkedItems = this.$store.getters.selectedData.checkedItemIndex;
+            })
         },
+        //左滑删除，后期优化
         swipeDelete() {
             console.log("ddddd")
         }
       },
       created() {
-          var _self = this;
-          shop.getCartList({}, function(data) {
+            var _self = this;
+            shop.getCartList({}, function(data) {
              _self.$store.dispatch('initCartData', data.res)
-         })
-          var aaa = [];
-          this.cartListData.forEach((item, index) => {
-            if(item.isChecked) {
-                aaa.push(index)
-            }
-          });
-          this.checkedItems = aaa;
+            })
+            var aaa = [];
+              this.cartListData.forEach((item, index) => {
+                if(item.isChecked) {
+                    aaa.push(index)
+                }
+            });
+            this.checkedItems = aaa;
 
       },
       components: {
