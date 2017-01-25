@@ -131,7 +131,6 @@ export default {
 	},
 	created () {
 		var _self = this;
-		console.log("asdasda")
 		shop.getHomeData(function(data) {
 			console.log(data)
 			_self.res = data.res
