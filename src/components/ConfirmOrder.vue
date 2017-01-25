@@ -67,7 +67,7 @@
 			        </div>
 			        <div class="price vertical-middle">
 			          <p>
-			            ￥0.00
+			            ￥{{freight}}
 			          </p>
 			        </div>
 			      </div>
@@ -127,6 +127,7 @@
 import HeadBar from './HeadBar'
 import { mapGetters, mapActions } from 'vuex'
 import { generate } from '../util/general'
+import shop from '../api/shop'
 
 export default {
 
@@ -136,7 +137,8 @@ export default {
 	data () {
 		return {
 			isShow: false,
-			address: false
+			address: false,
+			freight: 0
 		}
 	},
 	computed: {
@@ -175,6 +177,14 @@ export default {
 	},
 	created () {
 		this.$store.dispatch('getAddress')
+
+		var _self = this;
+		if(this.CchooseAddr) {
+			shop.getFreight({"order_ids":[1], "address_id":this.CchooseAddr.id}, function(data) {
+		 // _self.$store.dispatch('initCartData', data.res)
+			})
+		}
+		
 	}
 }
 </script>

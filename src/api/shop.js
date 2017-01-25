@@ -123,6 +123,13 @@ export default {
 			cb
 		})
 	},
+	getFreight (params, cb) {
+		ajax({
+			url: '/api/order/freight',
+			cb: cb,
+			params
+		})
+	},
 	getAddress (cb) {
 		ajax({
 			url: '/api/address/all',
