@@ -93,7 +93,7 @@
 	        <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary show_detail purchase_to_order" @click="showActionSheet('purchase')">立即购买</a>
       </div>
 	</div>
-	    <purchase-panel  v-bind:isShow = "isShow" v-on:closePanel="closePanel" v-bind:comfirmType = "comfirmType"></purchase-panel>
+	    <purchase-panel  v-bind:isShow = "isShow" v-on:closePanel="closePanel" v-on:changeCount="changeCount" v-bind:comfirmType = "comfirmType"></purchase-panel>
 </div>
 </template>
 
@@ -116,6 +116,9 @@ export default {
 		closePanel: function() {
 			this.isShow = false;
 		},
+		changeCount: function(count) {
+			this.res.cart_count = count
+		},
 		showActionSheet: function (type, event) {
 			var _self = this;
 			this.comfirmType = type;
@@ -129,16 +132,23 @@ export default {
 		}
 	},
 	beforeRouteEnter (to, from, next) {
-		shop.checkLogin({
-			params: {},
-			cb: data => {
-				if(!data.res.login){
-		      return window.location.href="http://preseller.gsteps.cn/api/user/oauth"+"?current_url="+escape(window.location.href)
-		    }
-		    next()
-			}
-		})
-  },
+		//检测是否是测试环境
+		var isNeedLogin = location.href === "http://localhost:8080/";
+		if(!isNeedLogin) {
+			shop.checkLogin({
+				params: {},
+				cb: data => {
+					if(!data.res.login){
+			      return window.location.href="http://preseller.gsteps.cn/api/user/oauth"+"?current_url="+escape(window.location.href)
+			    }
+			    next()
+				}
+			})
+		} else {
+			next()
+		}
+		
+  	},
 	created () {
 		// this.$store.dispatch('checkLogin', {})
 		var _self = this;

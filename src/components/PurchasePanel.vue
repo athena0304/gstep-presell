@@ -115,6 +115,8 @@ export default {
 
                 shop.addToCart(params, function(data) {
                   _self.closePanel();
+
+                  _self.$emit('changeCount', data.res.cart_count)
                   // this.$router.push({ name: 'ShoppingBag'})
                 })
                 

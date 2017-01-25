@@ -207,9 +207,10 @@ export default {
 		this.$store.dispatch('getAddress')
 
 		var _self = this;
+		var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
 		if(this.CchooseAddr) {
-			shop.getFreight({"order_ids":[1], "address_id":this.CchooseAddr.id}, function(data) {
-		 // _self.$store.dispatch('initCartData', data.res)
+			shop.getFreight({"order_ids": order_ids, "address_id":this.CchooseAddr.id}, function(data) {
+		 		_self.freight = data.res.freight;
 			})
 		}
 		
