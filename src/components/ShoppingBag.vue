@@ -264,7 +264,7 @@
   }
   .order-footer .price {
       position: absolute;
-      right: 0;
+      right: 0.4rem;
   }
   .order-footer .price div {
       display: inline-block;
