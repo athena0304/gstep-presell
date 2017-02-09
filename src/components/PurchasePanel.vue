@@ -110,7 +110,7 @@ export default {
                 var params = {
                   commodity_id: shop.COMMODITY_ID,
                   selected_option_ids: this.$store.getters.selected_option_ids,
-                  count: this.$store.getters.count
+                  count: this.num
                 }
 
                 shop.addToCart(params, function(data) {

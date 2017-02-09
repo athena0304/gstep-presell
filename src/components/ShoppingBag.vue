@@ -15,7 +15,7 @@
                           {{property.commodity_title}}
                         </p>
                         <p class="detail">
-                            <span v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
+                            <span class="explain-text" v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
                         </p>
                     </div>
                     <div class="price vertical-middle">
@@ -208,7 +208,7 @@
       font-size: 0.26rem;
   }
   .order-detail p.detail {
-      font-size: 0.18rem;
+      font-size: 12px;
       color: #999999;
   }
   .order-detail p:nth-child(1){
@@ -220,7 +220,7 @@
   }
   .order .price p {
       color: #fff;
-      font-size: 0.18rem;
+      font-size: 12px;
       text-align: right;
   }
   .order .price p:not(:nth-child(1)) {
@@ -275,7 +275,7 @@
   }
   .order-footer .price .price-detail p {
       color: #cacaca;
-      font-size: 0.18rem;
+      font-size: 12px;
       text-align: right;
   }
   .order-footer .price .price-detail p:nth-child(1) {
@@ -382,7 +382,7 @@
 
 .order-footer .price .price-detail p {
     color: #cacaca;
-    font-size: 0.18rem;
+    font-size: 12px;
     text-align: right;
 }
 .checkall {
@@ -417,6 +417,8 @@
 .checkbox-toggle:checked:after {
     content: "\EA06";
 }
-
+.explain-text {
+  margin-right: 10px;
+}
 
 </style>

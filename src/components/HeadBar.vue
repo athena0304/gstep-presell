@@ -15,13 +15,16 @@ export default {
 </script>
 <style lang="less" scoped>
 .header-bar {
-  font-size: 0.36rem;
+  font-size: 24px;
   background-color: #ffb400;
   color: #fff;
   height: 0.96rem;
   padding-left: 0.3rem;
   padding-right: 0.3rem;
   line-height: 0.96rem;
+  h3{
+    font-size: 24px;
+  }
 }
 
 .header-bar .back {
