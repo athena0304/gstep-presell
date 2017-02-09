@@ -47,7 +47,7 @@
 			    	              {{property.commodity_title}}
 			    	            </p>
 			    	            <p class="detail">
-			    	                <span v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
+			    	                <span class="explain-text" v-for="(item, index) in property.options">{{item.cn_attr_name}}: {{item.cn_option_name}}</span>
 			    	            </p>
 			    	        </div>
 			    	        <div class="price vertical-middle">
@@ -121,6 +121,9 @@
 	}
 	.addressArea {
 		display: block;
+	}
+	.explain-text {
+	  margin-right: 10px;
 	}
 </style>
 <script>

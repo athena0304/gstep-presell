@@ -19,7 +19,7 @@
 		<div class="product-wrapper">
 
 		    <div class="productImg">
-		        <img src="~static/img/title.png" alt="">
+		        <img :src="res.navigation" alt="">
 		    </div>
 
 		    <div class="product-info">
@@ -47,7 +47,7 @@
 
 		<router-link to="/introduction">
 		<div class="product_company area">
-		    <div class="logo"><img src="~static/img/logo.png" alt=""></div>
+		    <div class="logo"><img :src="res.logo" alt=""></div>
 		    <div class="company_text">{{res.publisher}}</div>
 		    <div class="instruction">品牌方</div>
 		    <div class="arrow">
@@ -80,6 +80,9 @@
 		    <div class="title area">
 		        <div class="splitbar">商品信息</div>
 		    </div>
+		</div>
+		<div class="productImg">
+		    <img v-for = "item in res.detail" :src="item" alt="">
 		</div>
 	</div>
 	<div class="footer button_active">

@@ -6,7 +6,7 @@
     <div class="order">
       <div class="order-inner vertical-middle">
         <div class="order-img show">
-          <img src="~static/img/logo.png" alt="" />
+          <img :src="purchaseDetail.sample_img" alt="" />
         </div>
         <div class="order-detail">
           <p>

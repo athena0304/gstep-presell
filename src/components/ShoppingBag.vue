@@ -8,7 +8,7 @@
                 <div class="order-inner vertical-middle">
                     <input type="checkbox" :value="itemIndex" class="checkbox-toggle" v-model="checkedItems" @change="selectItem">
                     <div class="order-img">
-                        <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
+                        <img :src="property.thumbnail" alt="" />
                     </div>
                     <div class="order-detail">
                         <p>
