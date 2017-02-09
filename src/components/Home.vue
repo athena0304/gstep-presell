@@ -133,7 +133,8 @@ export default {
 	},
 	beforeRouteEnter (to, from, next) {
 		//检测是否是测试环境
-		var isNeedLogin = location.href === "http://localhost:8080/";
+		// var isNeedLogin = location.href === "http://localhost:8080/";
+		var isNeedLogin = false;
 		if(!isNeedLogin) {
 			shop.checkLogin({
 				params: {},
