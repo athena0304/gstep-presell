@@ -40,7 +40,6 @@ export default {
 	getHomeData (cb) {
 		ajax({
 			url: '/api/commodity/index',
-			method: 'post',
 			params: {
 				commodity_id: COMMODITY_ID
 			},
@@ -50,6 +49,15 @@ export default {
 	getIntroduction (cb) {
 		ajax({
 			url: '/api/publisher/324234242423',
+			params: {
+				commodity_id: COMMODITY_ID
+			},
+			cb: cb
+		})
+	},
+	getpresellRule (cb) {
+		ajax({
+			url: '/api/commodity/rule',
 			params: {
 				commodity_id: COMMODITY_ID
 			},

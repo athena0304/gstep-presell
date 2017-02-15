@@ -27,9 +27,12 @@
 </div>
 </template>
 <script>
+import shop from '../api/shop'
 export default {
-  created() {
-    console.log("presellrules")
-  }
+    created() {
+        shop.getpresellRule(function(data) {
+            
+        })
+    }
 }
 </script>
