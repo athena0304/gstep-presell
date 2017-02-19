@@ -104,28 +104,27 @@ export default {
     panelConfirm() {
         var _self = this;
         var type = this.comfirmType
+        var params = {
+			commodity_id: shop.COMMODITY_ID,
+			selected_option_ids: this.$store.getters.selected_option_ids,
+			count: this.num
+		}
         switch (type) {
+          	
             case 'addCart':
-                
-                var params = {
-                  commodity_id: shop.COMMODITY_ID,
-                  selected_option_ids: this.$store.getters.selected_option_ids,
-                  count: this.num
-                }
-
+               
                 shop.addToCart(params, function(data) {
                   _self.closePanel();
-
                   _self.$emit('changeCount', data.res.cart_count)
-                  // this.$router.push({ name: 'ShoppingBag'})
                 })
                 
                 break;
-                // shop.getPrice(params, function(data) {
-                //     console.log(data.res)
-                // })
             case 'purchase':
-                this.$router.push({ name: 'ConfirmOrder'})
+            	params.immediately = true;
+            	shop.addToCart(params, function(data) {
+                  _self.$router.push({ name: 'ConfirmOrder'})
+                })
+                
                 break;
 
         }
