@@ -15,6 +15,11 @@ import PresellRule from './components/PresellRule'
 import Introduction from './components/Introduction'
 import addressList from './components/addressList'
 import address from './components/address'
+import myOrder from './components/myOrder'
+import all from './components/myOrder/all'
+import toBePaid from './components/myOrder/toBePaid'
+import toBeDelivered from './components/myOrder/toBeDelivered'
+import toBeReceived from './components/myOrder/toBeReceived'
 
 Vue.use(VueRouter)
 import { city } from './filter/city'
@@ -48,6 +53,31 @@ const routes = [{
   path: '/address-add',
   name: 'address',
   component: resolve => require(['./components/address.vue'],resolve),
+}, {
+  path: '/my-order',
+  name: 'myOrder',
+  component: resolve => require(['./components/myOrder.vue'],resolve),
+  children: [
+    {
+      // 当 /user/:id/profile 匹配成功，
+      // UserProfile 会被渲染在 User 的 <router-view> 中
+      path: 'all',
+      component: all,
+      name: 'all'
+   }, {
+      path: 'toBePaid',
+      name: 'wait_pay',
+      component: toBePaid
+   }, {
+      path: 'toBeDelivered',
+      component: toBeDelivered,
+      name: 'wait_send'
+   }, {
+      path: 'toBeReceived',
+      component: toBeReceived,
+      name: 'wait_receive'
+   }
+  ]
 }];
 
 const router = new VueRouter({

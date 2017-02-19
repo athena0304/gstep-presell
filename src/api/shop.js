@@ -177,5 +177,12 @@ export default {
 			params,
 			cb
 		})
+	},
+	getOrder (params, cb) {
+		ajax({
+			url: '/api/order/status',
+			params,
+			cb
+		})
 	}
 }
