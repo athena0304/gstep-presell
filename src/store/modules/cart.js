@@ -11,7 +11,8 @@ const state = {
 		checkedItemIndex: [],
 		isSelectAll: false,
 	},
-	total_price: null
+	total_price: null,
+
 }
 
 const getters = {

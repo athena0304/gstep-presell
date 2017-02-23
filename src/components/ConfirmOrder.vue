@@ -32,15 +32,15 @@
 			    <div class="order order_show_wrapper" style="">
 			      <div class="order-inner vertical-middle">
 			        <div class="order-detail">
-			          共<span class="order_total_number">{{selectedData.selectedCount}}</span>件商品
+			          共<span class="order_total_number">{{count}}</span>件商品
 			        </div>
 			      </div>
 			    </div>
 			    <div class="order-show">
-			    	<div class="order" v-for="(property, itemIndex) in selectedData.selectedItemList">
+			    	<div class="order" v-for="(property, itemIndex) in confirmOrderData">
 			    	    <div class="order-inner vertical-middle">
 			    	        <div class="order-img">
-			    	            <img :src="'http://preseller.gsteps.cn/' + property.thumbnail" alt="" />
+			    	            <img :src="property.thumbnail" alt="" />
 			    	        </div>
 			    	        <div class="order-detail">
 			    	            <p>
@@ -76,7 +76,7 @@
 			      <div class="order-inner vertical-middle">
 			        <div class="price vertical-middle">
 			          <p>
-			            应付：￥<span class="order_total_price">{{selectedData.selectedPrice}}</span>
+			            应付：￥<span class="order_total_price">{{total_price}}</span>
 			          </p>
 			        </div>
 			      </div>
@@ -141,7 +141,10 @@ export default {
 		return {
 			isShow: false,
 			address: false,
-			freight: 0
+			freight: 0,
+			confirmOrderData: [],
+			total_price:'',
+			count:''
 		}
 	},
 	computed: {
@@ -149,6 +152,7 @@ export default {
         chooseAddr: 'chooseAddr',
         defaultAddress: 'defaultAddress',
         selectedData: 'selectedData',
+        immOrderId: 'immOrderId',
     }),
 		CchooseAddr () {
 			return this.chooseAddr || this.defaultAddress
@@ -169,8 +173,8 @@ export default {
 			}
 		},
 		makePurchase () {
-
-			var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
+			var order_ids = JSON.parse(localStorage.order_id)
+			// var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
 			var _self = this
 			shop.orderPay({
 				params: JSON.stringify({'address_id': this.CchooseAddr.id, order_ids: order_ids}),
@@ -203,20 +207,33 @@ export default {
 		next()
 	},
 	mounted () {
-		this.$store.dispatch('changeMakeStatus', { status: false })
 		this.isShow = false
 	},
 	created () {
+		var _self = this;
+
+		var order_ids = JSON.parse(localStorage.order_id)
+		var isFromImm = JSON.parse(localStorage.isFromImm)
+
+		shop.getCartList({order_ids: order_ids, immediately: JSON.parse(isFromImm)}, function(data) {
+	         _self.total_price = data.res.total_price
+	         _self.confirmOrderData = data.res.orders
+	         var total_count = 0;
+	         _self.confirmOrderData.forEach((item) => {
+	         	total_count = total_count + item.count
+	         })
+	         _self.count = total_count
+    	})
+
 		this.$store.dispatch('getAddress')
 
-		var _self = this;
-		var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
+		// var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
 		if(this.CchooseAddr) {
 			shop.getFreight({"order_ids": order_ids, "address_id":this.CchooseAddr.id}, function(data) {
 		 		_self.freight = data.res.freight;
 			})
 		}
 		
-	}
+	},
 }
 </script>
