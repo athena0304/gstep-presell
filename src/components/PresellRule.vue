@@ -24,6 +24,7 @@
            搜狗拼音输入法官网下载,荣获多个国内软件大奖的搜狗拼音输入法是一款打字超准、词库超大、速度飞快、外观
         </div>
       </div>
+      <router-link to="/my-order"><button>>Go to Foo</button</router-link>
 </div>
 </template>
 <script>

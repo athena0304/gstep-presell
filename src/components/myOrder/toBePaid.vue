@@ -36,7 +36,7 @@
 	    <div class="buttons"><div class="button" @click='showDialog($event, item)'>取消订单</div></div>
 	  </div>
 	</div>
-	<div class="deleteOrder" v-show="showDeleteOrder">
+	<div class="deleteOrder" v-show="showCancelOrder">
 	    <div class="weui-mask"></div>
 	    <div class="weui-dialog">
 	        <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
@@ -96,7 +96,7 @@
 		data () {
 			return {
 				order_info: {},
-				deleteOrder: {},
+				calcelOrder: {},
 				showCancelOrder: false,
 				showMessage: "成功",
 				showToast: false,
@@ -108,8 +108,8 @@
 		},
 		methods: {
 			showDialog (event, item) {
-				this.showDeleteOrder = true
-				this.deleteOrder = item
+				this.showCancelOrder = true
+				this.calcelOrder = item
 				event.stopPropagation()
 			},
 			fadeOut () {
@@ -145,17 +145,17 @@
 			makeCancelOrder () {
 				var _self = this
 				let { showToast, showMessage } = this
-				var order_ids = [this.deleteOrder.order_id]
+				var order_ids = [this.calcelOrder.order_id]
 				var callback = fn => {
 					this.toastCallback = fn || (function() {})
 					this.showToast = true
-					this.showMessage = '删除订单成功'
+					this.showMessage = '取消订单成功'
 				}
 				shop.deleteOrder({
 					params: { order_ids },
-					cb: data => callback(() => data.msg == 'success' && this.order_info.splice(this.order_info.findIndex(item => item.order_id === this.deleteOrder.order_id), 1))
+					cb: data => callback(() => data.msg == 'success' && this.order_info.splice(this.order_info.findIndex(item => item.order_id === this.calcelOrder.order_id), 1))
 				})
-				this.showDeleteOrder = false
+				this.showCancelOrder = false
 			}
 		},
 		created () {

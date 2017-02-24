@@ -122,7 +122,7 @@
 					this.showMessage = '删除订单成功'
 				}
 				shop.deleteOrder({
-					params: { order_ids },
+					params: { order_ids, delete: true },
 					cb: data => callback(() => data.msg == 'success' && this.order_info.splice(this.order_info.findIndex(item => item.order_id === this.deleteOrder.order_id), 1))
 				})
 				this.showDeleteOrder = false

@@ -195,7 +195,7 @@ export default {
 	},
 	deleteOrder ({params, cb}) {
 		ajax({
-			url: '/api/order/delete',
+			url: '/api/order/close',
 			params,
 			cb
 		})
