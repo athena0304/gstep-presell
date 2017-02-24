@@ -9,7 +9,7 @@
 			return {}
 		},
 		created () {
-			const STATUS = 7
+			const STATUS = 8
 			let params = {
 				status: STATUS
 			}

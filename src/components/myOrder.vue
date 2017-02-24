@@ -24,35 +24,15 @@
 		  </ul>
 		</div>
 		<div class="tab-contents">
-			<router-view></router-view>
+			<router-view v-on:getCurrent='getCurrent'></router-view>
 		</div>
 			
 	</div>
 </template>
-<style lang='less' scoped>
-	.tabs {
-	  height: 0.98rem;
-	  font-size: 0;
-	  background-color: #3d3c3c;
-	}
-	.tabs .tab {
-	  height: 0.98rem;
-	  font-size: 0.26rem;
-	  color: #fff;
-	  display: inline-block;
-	  vertical-align: middle;
-	  width: 25%;
-	}
-	.tab .tab_text {
-	  height: 0.96rem;
-	  line-height: 0.96rem;
-	  text-align: center;
-	}
-	.tab .tab_bottom {
-	  height: 0.02rem;
-	}
-	.tab .tab_bottom.choose {
-	  background-color: #ffb400
+<style src="../less/myOrder.less"></style>
+<style scoped>
+	.main {
+	  bottom:0;
 	}
 </style>
 <script>
@@ -71,6 +51,12 @@
 				this.current = type
 				this.$router.push({
 					name: type
+				})
+			},
+			getCurrent (item) {
+				this.current = item
+				this.$router.replace({
+					name: item
 				})
 			}
 		}
