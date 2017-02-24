@@ -103,6 +103,11 @@
         //立即购买的跳转
         goToBuy() {
           if(this.$store.getters.selectedData.checkedItemIndex.length !== 0 ) {
+
+            localStorage.isFromImm = false;
+            var order_ids = this.$store.getters.selectedData.selectedItemList.map(item => item.order_id)
+            localStorage.order_id = JSON.stringify(order_ids)
+            
             this.$router.push({ name: 'ConfirmOrder'})
           }
         },

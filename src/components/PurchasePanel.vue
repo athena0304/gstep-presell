@@ -121,10 +121,15 @@ export default {
                 break;
             case 'purchase':
             	params.immediately = true;
+
             	shop.addToCart(params, function(data) {
-                  _self.$router.push({ name: 'ConfirmOrder'})
+            		localStorage.isFromImm = true;
+            		var order_ids = new Array();
+            		order_ids.push(data.res.order_id)
+            		localStorage.order_id = JSON.stringify(order_ids)
+                  	_self.$router.push({ name: 'ConfirmOrder'})
                 })
-                
+         
                 break;
 
         }
