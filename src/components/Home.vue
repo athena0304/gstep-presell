@@ -1,90 +1,98 @@
 <template>
-<div class='main'>
-	<div class="main-body home-main-body">
-		<div class="productTitle">
-		    <h1 class="title">{{res.title}}</h1>
-		    <div class="sub_wrapper">
-		        <div class="in left">
-		            <span class="bracket"></span>
-		            <span class="line"></span>
-		        </div>
-		        <div class="in right">
-		            <span class="bracket"></span>
-		            <span class="line"></span>
-		        </div>
-		        <h2 class="subheading">{{res.brief}}</h2>
-		    </div>
-		</div>
+<div>
+	<div class='main'>
+		<div class="main-body home-main-body">
+			<div class="productTitle">
+			    <h1 class="title">{{res.title}}</h1>
+			    <div class="sub_wrapper">
+			        <div class="in left">
+			            <span class="bracket"></span>
+			            <span class="line"></span>
+			        </div>
+			        <div class="in right">
+			            <span class="bracket"></span>
+			            <span class="line"></span>
+			        </div>
+			        <h2 class="subheading">{{res.brief}}</h2>
+			    </div>
+			</div>
 
-		<div class="product-wrapper">
+			<div class="product-wrapper">
 
-		    <div class="productImg">
-		        <img :src="res.navigation" alt="">
-		    </div>
+			    <div class="productImg">
+			        <img :src="res.navigation" alt="">
+			    </div>
 
-		    <div class="product-info">
-		        <div class="product-info-title">
-		            <div class="product-info-count">
-		                <p class="total_count">预售{{res.presell_count}}件</p>
-		                <p class="min_count">满{{res.satisfy_count}}件发货</p>
-		            </div>
-		            <div class="product-info-price">
-		                <span class="unit">$</span>
-		                <span class="price">86</span>
-		            </div>
-		        </div>
+			    <div class="product-info">
+			        <div class="product-info-title">
+			            <div class="product-info-count">
+			                <p class="total_count">预售{{res.presell_count}}件</p>
+			                <p class="min_count">满{{res.satisfy_count}}件发货</p>
+			            </div>
+			            <div class="product-info-price">
+			                <span class="unit">$</span>
+			                <span class="price">86</span>
+			            </div>
+			        </div>
 
-		        <div class="product-info-progress">
-		            <div class="progress-wrapper">
-		                <div class="progress-inner" v-bind:style="{width: res.sold_count + '%'}">
-		                </div>
-		            </div>
-		            <div class="progress-text">{{res.sold_count}} / 100
-		            </div>
-		        </div>
-		    </div> 
-		</div>
+			        <div class="product-info-progress">
+			            <div class="progress-wrapper">
+			                <div class="progress-inner" v-bind:style="{width: res.sold_count + '%'}">
+			                </div>
+			            </div>
+			            <div class="progress-text">{{res.sold_count}} / 100
+			            </div>
+			        </div>
+			    </div> 
+			</div>
 
-		<router-link to="/introduction">
-		<div class="product_company area">
-		    <div class="logo"><img :src="res.logo" alt=""></div>
-		    <div class="company_text">{{res.publisher}}</div>
-		    <div class="instruction">品牌方</div>
-		    <div class="arrow">
-		    </div>
-		</div>
-		</router-link>
-
-		<router-link to="/presell-rule">
-			<div class="pre_rule area">
-			    <div class="splitbar">预售规则</div>
+			<router-link to="/introduction">
+			<div class="product_company area">
+			    <div class="logo"><img :src="res.logo" alt=""></div>
+			    <div class="company_text">{{res.publisher_name}}</div>
+			    <div class="instruction">品牌方</div>
 			    <div class="arrow">
 			    </div>
 			</div>
-		</router-link>
+			</router-link>
 
-		<div class="recomand area">
-		    <div class="splitbar">靠谱推荐</div>
-		</div>
+			<router-link to="/presell-rule">
+				<div class="pre_rule area">
+				    <div class="splitbar">预售规则</div>
+				    <div class="arrow">
+				    </div>
+				</div>
+			</router-link>
 
-		<ul class="recomand_items">
-		    <li v-for="recommend in res.recommends" class="recomand_item" style="">
-		        <div class="img"><img :src="recommend.profile" alt=""></div>
-		        <div class="user_context">
-		            <p><span>{{recommend.name}}  | </span>{{recommend.job}}</p>
-		            <p class="small text-nowrap">{{recommend.content}}</p>
-		        </div>
-		    </li>
-		</ul>
-		<div class="company-info">
-		    <div class="title area">
-		        <div class="splitbar">商品信息</div>
-		    </div>
-		</div>
-		<div class="productImg">
-		    <img v-for = "item in res.detail" :src="item" alt="">
+			<div class="home-grey-area">
+				<div class="recomand area">
+				    <div class="splitbar">靠谱推荐</div>
+
+				</div>
+				<ul class="recomand_items">
+				    <li v-for="recommend in res.recommends" class="recomand_item" style="">
+				        <div class="img"><img :src="recommend.profile" alt=""></div>
+				        <div class="user_context">
+				            <p><span>{{recommend.name}}  | </span>{{recommend.job}}</p>
+				            <p class="small text-nowrap">{{recommend.content}}</p>
+				        </div>
+				    </li>
+				</ul>
+			</div>
+			
+
+			
+			<div class="company-info">
+			    <div class="title area">
+			        <div class="splitbar">商品信息</div>
+			    </div>
+			</div>
+			<div class="productImg">
+			    <img v-for = "item in res.detail" :src="item" alt="">
+			</div>
 		</div>
 	</div>
+	<purchase-panel  v-bind:isShow = "isShow" v-on:closePanel="closePanel" v-on:changeCount="changeCount" v-bind:comfirmType = "comfirmType"></purchase-panel>
 	<div class="footer button_active">
 		<router-link to="/shopping-bag">
 			<div class="haha">
@@ -96,8 +104,9 @@
 	        <a href="javascript:;" class="weui-btn weui-btn_mini weui_btn_plain_primary show_detail purchase_to_order" @click="showActionSheet('purchase')">立即购买</a>
       </div>
 	</div>
-	    <purchase-panel  v-bind:isShow = "isShow" v-on:closePanel="closePanel" v-on:changeCount="changeCount" v-bind:comfirmType = "comfirmType"></purchase-panel>
+
 </div>
+
 </template>
 
 <script>

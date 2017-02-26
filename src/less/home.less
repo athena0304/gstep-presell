@@ -1,8 +1,9 @@
 body {
   background: #1b1919;
-  font-family:Helvetica;
+  font-family: -apple-system-font,Helvetica Neue,sans-serif;
 }
 .main {
+   -webkit-overflow-scrolling: touch;
   position: absolute;
   left: 0;
   right: 0;
@@ -43,6 +44,9 @@ body {
     padding-right: 0.1rem;
     letter-spacing: 0.5px;
     color: #8b8a8a;
+}
+.weui-mask, .weui-mask_transparent {
+      background: rgba(0,0,0,.5);
 }
 .in.left {
   float: left;
@@ -219,9 +223,10 @@ body {
 /*product_company-start*/
 .area {
   height: 0.98rem;
-   background-color: rgba(255, 255, 255, 0.1);
-   position: relative;
- margin-bottom: 0.05rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
+  margin-bottom: 0.05rem;
+  border-radius: 3px;
 }
 .product_company div {
   display: inline-block;
@@ -265,6 +270,13 @@ body {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+.recomand_items {
+  // background-color: rgba(255, 255, 255, 0.1);
+}
+.home-grey-area {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.05rem;
 }
 .product_company .instruction {
   position: absolute;
@@ -341,6 +353,7 @@ body {
   height: 100%;
   vertical-align: middle;
   display: inline-block;
+  border-radius: 50%;
 }
 .recomand_item div {
   display: inline-block;
@@ -357,7 +370,6 @@ body {
 }
 .user_context .small {
   width: 5rem;
-  margin-top: 0.12rem;
   font-size: 12px;
   color: #fff;
 }
