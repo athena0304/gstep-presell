@@ -29,7 +29,7 @@
 			
 	</div>
 </template>
-<style src="../less/myOrder.less"></style>
+<style src="../less/myOrder.less" scoped></style>
 <style scoped>
 	.main {
 	  bottom:0;
