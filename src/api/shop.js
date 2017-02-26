@@ -48,7 +48,7 @@ export default {
 	},
 	getIntroduction (cb) {
 		ajax({
-			url: '/api/publisher/324234242423',
+			url: '/api/commodity/publisher',
 			params: {
 				commodity_id: COMMODITY_ID
 			},
