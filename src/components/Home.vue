@@ -20,7 +20,7 @@
 			<div class="product-wrapper">
 
 			    <div class="productImg">
-			        <img :src="res.navigation" alt="">
+			        <img :src="res.navigation" alt="" class="home-img-radius">
 			    </div>
 
 			    <div class="product-info">
